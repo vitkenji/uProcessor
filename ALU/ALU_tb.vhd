@@ -10,14 +10,14 @@ architecture ALU_tb_arch of ALU_tb is
     port (
         input_0, input_1 : in unsigned (15 downto 0);
         operation_selector : in unsigned (1 downto 0);
-        C, Z : out std_logic;
+        carry, greater_equal, less_equal : out std_logic;
         output : out unsigned (15 downto 0)
     );
     end component;
 
     signal input_0, input_1 : unsigned (15 downto 0);
     signal operation_selector : unsigned (1 downto 0);
-    signal C, Z : std_logic;
+    signal carry, greater_equal, less_equal : std_logic;
     signal output : unsigned (15 downto 0);
 
     begin
@@ -25,8 +25,8 @@ architecture ALU_tb_arch of ALU_tb is
             input_0 => input_0,
             input_1 => input_1,
             operation_selector => operation_selector,
-            C => C,
-            Z => Z,
+            greater_equal => greater_equal,
+            less_equal => less_equal,
             output => output
         );
         process
