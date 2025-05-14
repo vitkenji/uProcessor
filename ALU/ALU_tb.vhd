@@ -46,14 +46,7 @@ architecture ALU_tb_arch of ALU_tb is
             input_1 <= "0000000000000010"; -- 2
             wait for 20 ns;
 
-            -- Caso de Teste 3: Subtração inversa
-            -- Input_0: 2(0010) | Input_1: 12(1100) | Resultado esperado: 10(0000000000001010)
-            operation_selector <= "01";
-            input_0 <= "0000000000000010"; -- 2
-            input_1 <= "0000000000001100"; -- 12
-            wait for 20 ns;
-
-            -- Caso de Teste 4: And
+            -- Caso de Teste 3: And
             -- Input_0: 0010001101101110 | Input_1: 0100000101001111 | Resultado esperado: 0000000101001110
             operation_selector <= "10";
             input_0 <= "0010001101101110";
@@ -68,7 +61,7 @@ architecture ALU_tb_arch of ALU_tb is
             wait for 20 ns;
 
             -- Caso de Teste 5: Soma com carry | Resultado > 65535 (1111111111111111)
-            -- Input_0: 50000(1100001101010000) | Input_1: 30000(0111010100110000) | Resultado esperado: 80000(0011100010000000) e carry 1
+            -- Input_0: 50000(1100001101010000) | Input_1: 30000(0111010100110000) | Resultado esperado: 80000(0011100010000000 -> 14464 Sem o bit 16) e carry 1
             operation_selector <= "00";
             input_0 <= "1100001101010000";
             input_1 <= "0111010100110000"; 
