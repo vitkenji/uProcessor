@@ -2,6 +2,12 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+-- Operações da ALU
+-- 00 -> soma [1+0 = 1; 0+1 = 1; 0+0 = 0; 1+1 = 10;]
+-- 01 -> subtração [1-0 = 1; 0-1 = 1; 1-1 = 0; 0-0 = 0]
+-- 10 -> and [Aplica a operação and bit a bit entre os dois números]
+-- 11 -> xor [Aplica a operação xor bit a bit entre os dois números]
+
 entity ALU is
     port (
         input_0, input_1 : in unsigned (15 downto 0);
@@ -16,10 +22,11 @@ architecture ALU_arch of ALU is
     signal input_0_17bits, input_1_17bits, sum_result, sub_result : unsigned(16 downto 0);
 
 begin
+    -- Formando 17 bits para armezenar o carry junto com o resultado da operação
     input_0_17bits <= '0' & input_0;
     input_1_17bits <= '0' & input_1;
-    
-    sum_result <= input_0_17bits + input_0_17bits;
+
+    sum_result <= input_0_17bits + input_1_17bits;
     sub_result <= input_0_17bits - input_1_17bits;
 
     output <= unsigned(input_0) + unsigned(input_1) when operation_selector = "00" else
