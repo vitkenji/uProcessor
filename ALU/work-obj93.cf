@@ -1,16 +1,19 @@
 v 4
-file . "bancoReg.vhd" "ece15df8f88d676b89886f40dea80e3f64baeaa2" "20250521021843.281":
-  entity bancoreg at 1( 0) + 0 on 147;
-  architecture a_bancoreg of bancoreg at 26( 693) + 0 on 148;
-file . "reg16bits_tb.vhd" "76e209a5a7a6ab3dc3d41a29c48ae0048283cc48" "20250521021843.291":
-  entity reg16bits_tb at 1( 0) + 0 on 151;
-  architecture reg16bits_arch of reg16bits_tb at 8( 99) + 0 on 152;
-file . "reg16bits.vhd" "fa80dae7b14d5250e46c8c8e41a2ff38b8ac2f8d" "20250521021843.288":
-  entity reg16bits at 1( 0) + 0 on 149;
-  architecture a_reg16bits of reg16bits at 16( 308) + 0 on 150;
-file . "ALU.vhd" "8c6c9322d646e0bc075e7d41773925134e343392" "20250521021843.270":
-  entity alu at 1( 0) + 0 on 143;
-  architecture alu_arch of alu at 20( 621) + 0 on 144;
-file . "ALU_tb.vhd" "9ec987f782c79b9864287133063b39584011335c" "20250521021843.277":
-  entity alu_tb at 1( 0) + 0 on 145;
-  architecture alu_tb_arch of alu_tb at 8( 100) + 0 on 146;
+file . "bancoReg.vhd" "41f95d4e2ab2783123f7a034a74dae5067f0b3b2" "20250521025747.371":
+  entity bancoreg at 1( 0) + 0 on 169;
+  architecture a_bancoreg of bancoreg at 26( 693) + 0 on 170;
+file . "reg16bits_tb.vhd" "76e209a5a7a6ab3dc3d41a29c48ae0048283cc48" "20250521025747.380":
+  entity reg16bits_tb at 1( 0) + 0 on 175;
+  architecture reg16bits_arch of reg16bits_tb at 8( 99) + 0 on 176;
+file . "reg16bits.vhd" "fa80dae7b14d5250e46c8c8e41a2ff38b8ac2f8d" "20250521025747.376":
+  entity reg16bits at 1( 0) + 0 on 173;
+  architecture a_reg16bits of reg16bits at 16( 308) + 0 on 174;
+file . "ALU.vhd" "8c6c9322d646e0bc075e7d41773925134e343392" "20250521025747.364":
+  entity alu at 1( 0) + 0 on 165;
+  architecture alu_arch of alu at 20( 621) + 0 on 166;
+file . "ALU_tb.vhd" "9ec987f782c79b9864287133063b39584011335c" "20250521025747.368":
+  entity alu_tb at 1( 0) + 0 on 167;
+  architecture alu_tb_arch of alu_tb at 8( 100) + 0 on 168;
+file . "main.vhd" "c8109c41f49817866edab23f4a9e850cb663d933" "20250521025747.373":
+  entity main at 1( 0) + 0 on 171;
+  architecture a_main of main at 26( 638) + 0 on 172;
