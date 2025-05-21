@@ -1,7 +1,13 @@
 v 4
-file . "ALU_tb.vhd" "77c3c3b1e5582526559c853ad924fbe2a0a864dd" "20250514200759.135":
-  entity alu_tb at 1( 0) + 0 on 45;
-  architecture alu_tb_arch of alu_tb at 8( 100) + 0 on 46;
-file . "ALU.vhd" "0214f209a4b7f23842b7af8cbcce75205ae2cac2" "20250514200759.069":
-  entity alu at 1( 0) + 0 on 43;
-  architecture alu_arch of alu at 20( 622) + 0 on 44;
+file . "ALU_tb.vhd" "9ec987f782c79b9864287133063b39584011335c" "20250521002424.754":
+  entity alu_tb at 1( 0) + 0 on 137;
+  architecture alu_tb_arch of alu_tb at 8( 100) + 0 on 138;
+file . "ALU.vhd" "8c6c9322d646e0bc075e7d41773925134e343392" "20250521002424.751":
+  entity alu at 1( 0) + 0 on 135;
+  architecture alu_arch of alu at 20( 621) + 0 on 136;
+file . "reg16bits.vhd" "fa80dae7b14d5250e46c8c8e41a2ff38b8ac2f8d" "20250521002424.758":
+  entity reg16bits at 1( 0) + 0 on 139;
+  architecture a_reg16bits of reg16bits at 16( 308) + 0 on 140;
+file . "reg16bits_tb.vhd" "04a5fa2923dfd69c64d41e3005276f4dac8fd95b" "20250521002424.760":
+  entity reg16bits_tb at 1( 0) + 0 on 141;
+  architecture reg16bits_arch of reg16bits_tb at 8( 99) + 0 on 142;

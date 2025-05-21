@@ -20,13 +20,9 @@ end entity;
 architecture ALU_arch of ALU is
 
     -- Sinais auxiliares
-    signal input_0_17bits, input_1_17bits, sum_result, sub_result : unsigned(16 downto 0);
+    signal input_0_17bits, input_1_17bits, sum_result_17bits, sub_result_17bits : unsigned(16 downto 0);
 
 begin
-    -- [*] Melhoria Futura: Tratamento com números negativos, ou seja, não usar mais unsigned e sim como signed
-    input_0 <= unsigned(input_0);
-    input_1 <= unsigned(input_1);
-
     -- Formando 17 bits para armazenar o carry junto com o resultado da operação
     input_0_17bits <= '0' & input_0;
     input_1_17bits <= '0' & input_1;

@@ -1,17 +1,24 @@
 SRC=ALU.vhd
-TB=ALU_tb.vhd
 ENTITY=ALU
-TB_ENTITY=ALU_tb
-WAVE=ALU.ghw
+
+TB=reg16bits_tb.vhd
+TB_ENTITY=reg16bits_tb
+
+WAVE=$(TB_ENTITY).ghw
+
 
 # Regra padrão
 all: run
 
 # Compila os arquivos
-analyze:
+analyze_especifico:
 	ghdl -a $(SRC)
 	ghdl -e $(ENTITY)
 	ghdl -a $(TB)
+	ghdl -e $(TB_ENTITY)
+
+analyze:
+	ghdl -a *.vhd
 	ghdl -e $(TB_ENTITY)
 
 # Executa o testbench e gera o waveform
@@ -23,7 +30,7 @@ view_padrao: run
 	gtkwave $(WAVE)
 
 view: run
-	gtkwave $(WAVE) alu_ghw_configurado.gtkw
+	gtkwave $(WAVE) $(TB_ENTITY)_configGHW.gtkw
 
 # Limpa arquivos gerados
 clean:
