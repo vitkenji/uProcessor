@@ -1,0 +1,42 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Thu May 22 20:06:43 2025
+[*]
+[dumpfile] "/mnt/c/Users/Adryan/Desktop/Adryan/Estudo/Faculdade/5ºPeriodo/ArquiteturaDeComputadores/TRABALHO_DUPLA/uProcessor/main_tb.ghw"
+[dumpfile_mtime] "Thu May 22 20:03:31 2025"
+[dumpfile_size] 6827
+[savefile] "/mnt/c/Users/Adryan/Desktop/Adryan/Estudo/Faculdade/5ºPeriodo/ArquiteturaDeComputadores/TRABALHO_DUPLA/uProcessor/main_tb_configGHW.gtkw"
+[timestart] 0
+[size] 1908 999
+[pos] -1 -1
+*-25.068624 65000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.main_tb.
+[treeopen] top.main_tb.uut.uut_alu.
+[sst_width] 214
+[signals_width] 214
+[sst_expanded] 1
+[sst_vpaned_height] 292
+@28
+top.main_tb.uut.rst
+top.main_tb.uut.clk
+top.main_tb.uut.write_enable_regs
+top.main_tb.uut.write_enable_a
+@24
+#{top.main_tb.data_write[15:0]} top.main_tb.data_write[15] top.main_tb.data_write[14] top.main_tb.data_write[13] top.main_tb.data_write[12] top.main_tb.data_write[11] top.main_tb.data_write[10] top.main_tb.data_write[9] top.main_tb.data_write[8] top.main_tb.data_write[7] top.main_tb.data_write[6] top.main_tb.data_write[5] top.main_tb.data_write[4] top.main_tb.data_write[3] top.main_tb.data_write[2] top.main_tb.data_write[1] top.main_tb.data_write[0]
+@28
+#{top.main_tb.reg_write[2:0]} top.main_tb.reg_write[2] top.main_tb.reg_write[1] top.main_tb.reg_write[0]
+#{top.main_tb.reg_read[2:0]} top.main_tb.reg_read[2] top.main_tb.reg_read[1] top.main_tb.reg_read[0]
+@24
+#{top.main_tb.uut.data_out_a[15:0]} top.main_tb.uut.data_out_a[15] top.main_tb.uut.data_out_a[14] top.main_tb.uut.data_out_a[13] top.main_tb.uut.data_out_a[12] top.main_tb.uut.data_out_a[11] top.main_tb.uut.data_out_a[10] top.main_tb.uut.data_out_a[9] top.main_tb.uut.data_out_a[8] top.main_tb.uut.data_out_a[7] top.main_tb.uut.data_out_a[6] top.main_tb.uut.data_out_a[5] top.main_tb.uut.data_out_a[4] top.main_tb.uut.data_out_a[3] top.main_tb.uut.data_out_a[2] top.main_tb.uut.data_out_a[1] top.main_tb.uut.data_out_a[0]
+@28
+top.main_tb.uut.carry
+top.main_tb.uut.less_equal
+top.main_tb.uut.greater_equal
+#{top.main_tb.operation_selector[1:0]} top.main_tb.operation_selector[1] top.main_tb.operation_selector[0]
+@24
+#{top.main_tb.uut.uut_alu.input_0[15:0]} top.main_tb.uut.uut_alu.input_0[15] top.main_tb.uut.uut_alu.input_0[14] top.main_tb.uut.uut_alu.input_0[13] top.main_tb.uut.uut_alu.input_0[12] top.main_tb.uut.uut_alu.input_0[11] top.main_tb.uut.uut_alu.input_0[10] top.main_tb.uut.uut_alu.input_0[9] top.main_tb.uut.uut_alu.input_0[8] top.main_tb.uut.uut_alu.input_0[7] top.main_tb.uut.uut_alu.input_0[6] top.main_tb.uut.uut_alu.input_0[5] top.main_tb.uut.uut_alu.input_0[4] top.main_tb.uut.uut_alu.input_0[3] top.main_tb.uut.uut_alu.input_0[2] top.main_tb.uut.uut_alu.input_0[1] top.main_tb.uut.uut_alu.input_0[0]
+#{top.main_tb.uut.uut_alu.input_1[15:0]} top.main_tb.uut.uut_alu.input_1[15] top.main_tb.uut.uut_alu.input_1[14] top.main_tb.uut.uut_alu.input_1[13] top.main_tb.uut.uut_alu.input_1[12] top.main_tb.uut.uut_alu.input_1[11] top.main_tb.uut.uut_alu.input_1[10] top.main_tb.uut.uut_alu.input_1[9] top.main_tb.uut.uut_alu.input_1[8] top.main_tb.uut.uut_alu.input_1[7] top.main_tb.uut.uut_alu.input_1[6] top.main_tb.uut.uut_alu.input_1[5] top.main_tb.uut.uut_alu.input_1[4] top.main_tb.uut.uut_alu.input_1[3] top.main_tb.uut.uut_alu.input_1[2] top.main_tb.uut.uut_alu.input_1[1] top.main_tb.uut.uut_alu.input_1[0]
+#{top.main_tb.saida[15:0]} top.main_tb.saida[15] top.main_tb.saida[14] top.main_tb.saida[13] top.main_tb.saida[12] top.main_tb.saida[11] top.main_tb.saida[10] top.main_tb.saida[9] top.main_tb.saida[8] top.main_tb.saida[7] top.main_tb.saida[6] top.main_tb.saida[5] top.main_tb.saida[4] top.main_tb.saida[3] top.main_tb.saida[2] top.main_tb.saida[1] top.main_tb.saida[0]
+[pattern_trace] 1
+[pattern_trace] 0

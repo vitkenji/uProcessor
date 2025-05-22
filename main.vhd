@@ -106,6 +106,8 @@ begin
 
     -- Lógica para atualização do acumulador
     data_in_A <= saida_ALU when write_enable_A = '1' else 
-    '0';
+    "0000000000000000";
+
+    saida <= saida_ALU;
 
 end architecture a_main;

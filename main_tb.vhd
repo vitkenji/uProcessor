@@ -84,13 +84,14 @@ begin
     wait for 2 * clk_period;
     rst <= '0';
     wait for 2 * clk_period;
-
     write_enable_regs <= '1';
     reg_write <= "000";
-    data_write <= to_unsigned(170, 16); -- 0x0AA
+    data_write <= to_unsigned(170, 16); -- 10101010
     wait for clk_period;
     write_enable_regs <= '0';
+    data_write <= to_unsigned(0, 16);
     wait for clk_period;
+
 
     reg_read <= "000";
 
