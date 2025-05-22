@@ -62,8 +62,8 @@ architecture a_main of main is
     -- Sinais
 
     -- Registrador de 16 bits [Acumulador]
-    signal data_in_A : unsigned(15 downto 0);
-    signal data_out_A : unsigned(15 downto 0);
+    signal data_in_A : unsigned(15 downto 0) := (others => '0');
+    signal data_out_A : unsigned(15 downto 0) := (others => '0');
 
     -- Banco de registradores
     signal data_out_reg: unsigned(15 downto 0);
