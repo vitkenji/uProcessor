@@ -92,8 +92,6 @@ begin
         data_out => data_out_r5
     );
 
-    -- [*] Não fiz nenhuma das lógicas dentro do process pois deu um erro "onditional signal assignment not allowed in before vhdl08", ou seja, na versão que estou do vhdl, essa atribuição não é permitida dentro do process.
-
     -- Lógica de controle para escrita
     write_enable_r0 <= write_enable when reg_write = "000" else '0';
     write_enable_r1 <= write_enable when reg_write = "001" else '0';
@@ -112,21 +110,5 @@ begin
                 data_out_r4 when reg_read = "100" else
                 data_out_r5 when reg_read = "101" else
                 "0000000000000000";
-
-    -- Estrutura que deu erro
-    
-    -- Lógica de controle para leitura
-    -- reg_read_process: process(clk)
-    -- begin
-    --     if rising_edge(clk) then
-    --     end if;
-    -- end process reg_read_process;
-
-    -- Lógica de controle para escrita
-    -- reg_write_process: process(clk)
-    -- begin
-    --     if rising_edge(clk) then        
-    --     end if;
-    -- end process reg_write_process;
 
 end architecture a_bancoReg;
