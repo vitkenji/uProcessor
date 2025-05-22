@@ -1,16 +1,16 @@
 v 4
-file . "main_tb.vhd" "23b8828ad4b7aef79af41aa4e30d2c2f651eee08" "20250522142148.633":
-  entity main_tb at 1( 0) + 0 on 43;
-  architecture main_tb_arch of main_tb at 8( 101) + 0 on 44;
-file . "Registers/bancoReg.vhd" "41f95d4e2ab2783123f7a034a74dae5067f0b3b2" "20250522142148.620":
-  entity bancoreg at 1( 0) + 0 on 39;
-  architecture a_bancoreg of bancoreg at 26( 693) + 0 on 40;
-file . "main.vhd" "1fa569818f1ad908251d3c05b182d387e950bb36" "20250522142148.627":
-  entity main at 1( 0) + 0 on 41;
-  architecture a_main of main at 26( 638) + 0 on 42;
-file . "ALU/ALU.vhd" "6063fa7627cb2b605cc33b76db74f394c4b592fb" "20250522142148.609":
-  entity alu at 1( 0) + 0 on 35;
-  architecture alu_arch of alu at 20( 602) + 0 on 36;
-file . "Registers/reg16bits.vhd" "fa80dae7b14d5250e46c8c8e41a2ff38b8ac2f8d" "20250522142148.619":
-  entity reg16bits at 1( 0) + 0 on 37;
-  architecture a_reg16bits of reg16bits at 16( 308) + 0 on 38;
+file . "main_tb.vhd" "e5f2875169b9230ddbce119a59b8099d863e647a" "20250522193650.215":
+  entity main_tb at 1( 0) + 0 on 63;
+  architecture main_tb_arch of main_tb at 8( 108) + 0 on 64;
+file . "Registers/bancoReg.vhd" "2a69c1e3aa4aaf0ef872add762021a43944f8166" "20250522193650.176":
+  entity bancoreg at 1( 0) + 0 on 59;
+  architecture a_bancoreg of bancoreg at 26( 718) + 0 on 60;
+file . "main.vhd" "36bfbb7947336a6a9d4275a62d53020e10395d17" "20250522193650.194":
+  entity main at 1( 0) + 0 on 61;
+  architecture a_main of main at 26( 663) + 0 on 62;
+file . "ALU/ALU.vhd" "8c6c9322d646e0bc075e7d41773925134e343392" "20250522193650.151":
+  entity alu at 1( 0) + 0 on 55;
+  architecture alu_arch of alu at 20( 621) + 0 on 56;
+file . "Registers/reg16bits.vhd" "07a8684186b095c40e4ad643b1ca65c78322eb15" "20250522193650.173":
+  entity reg16bits at 1( 0) + 0 on 57;
+  architecture a_reg16bits of reg16bits at 16( 323) + 0 on 58;
