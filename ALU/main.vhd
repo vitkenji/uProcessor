@@ -107,10 +107,10 @@ begin
     -- Lógica para atualização do acumulador
     process(clk)
     begin
-        if write_enable_A = '1' then
-            if rising_edge(clk) then
+        if rising_edge(clk) then
+            if write_enable_A = '1' then
                 data_in_A <= saida_ALU;
-            end if ;
+            end if;
         end if;
     end process;
 
