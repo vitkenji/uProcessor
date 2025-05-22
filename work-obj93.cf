@@ -1,0 +1,16 @@
+v 4
+file . "main_tb.vhd" "450faf6eb226f22022892a07f075dd36f9b73cc0" "20250522141352.096":
+  entity main_tb at 1( 0) + 0 on 23;
+  architecture main_tb_arch of main_tb at 8( 101) + 0 on 24;
+file . "Registers/bancoReg.vhd" "41f95d4e2ab2783123f7a034a74dae5067f0b3b2" "20250522141321.911":
+  entity bancoreg at 1( 0) + 0 on 19;
+  architecture a_bancoreg of bancoreg at 26( 693) + 0 on 20;
+file . "main.vhd" "1fa569818f1ad908251d3c05b182d387e950bb36" "20250522141331.463":
+  entity main at 1( 0) + 0 on 21;
+  architecture a_main of main at 26( 638) + 0 on 22;
+file . "ALU/ALU.vhd" "6063fa7627cb2b605cc33b76db74f394c4b592fb" "20250522141253.357":
+  entity alu at 1( 0) + 0 on 15;
+  architecture alu_arch of alu at 20( 602) + 0 on 16;
+file . "Registers/reg16bits.vhd" "fa80dae7b14d5250e46c8c8e41a2ff38b8ac2f8d" "20250522141303.776":
+  entity reg16bits at 1( 0) + 0 on 17;
+  architecture a_reg16bits of reg16bits at 16( 308) + 0 on 18;

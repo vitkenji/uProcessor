@@ -80,13 +80,11 @@ begin
 
     stim_proc: process
 begin
-    -- Reset inicial
     rst <= '1';
     wait for 2 * clk_period;
     rst <= '0';
     wait for 2 * clk_period;
 
-    -- Escreve 0x0AA (170 decimal) no registrador 000
     write_enable_regs <= '1';
     reg_write <= "000";
     data_write <= to_unsigned(170, 16); -- 0x0AA
@@ -94,10 +92,8 @@ begin
     write_enable_regs <= '0';
     wait for clk_period;
 
-    -- Lê do registrador 000, faz operação com ele mesmo (ULA usando reg_read = 000)
     reg_read <= "000";
 
-    -- Testa todas as operações da ULA
     for i in 0 to 3 loop
         operation_selector <= to_unsigned(i, 2); -- "00", "01", "10", "11"
         
@@ -107,7 +103,6 @@ begin
         wait for 2 * clk_period;
     end loop;
 
-    -- Escreve o valor da saída no registrador 000 (opcional)
     write_enable_regs <= '1';
     reg_write <= "000";
     data_write <= saida;
@@ -116,6 +111,4 @@ begin
 
     wait;
 end process;
-
-
 end architecture;
