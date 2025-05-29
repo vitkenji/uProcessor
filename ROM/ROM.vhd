@@ -11,7 +11,7 @@ port(
 end entity;
 
 architecture ROM_arch of ROM is
-    type mem is array (0 to 127) of unsigned(11 downto 0);
+    type mem is array (0 to 127) of unsigned(16 downto 0);
     constant ROM_content : mem := (
         0 => "00000000000000011",
         1 => "00000010010010011",
