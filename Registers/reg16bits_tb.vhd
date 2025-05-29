@@ -33,16 +33,7 @@ begin
         data_in => data_in,
         data_out => data_out
     );
-
-    -- Não funciona : pq?
-    -- reset_global: process 
-    -- begin
-    --     rst <= '1';
-    --     wait for clk_period; -- Garantia
-    --     rst <= '0';
-    --     wait;
-    -- end process reset_global;
-    
+ 
     -- Unico processo que termina a simulação
     time_total_simulation: process
     begin
