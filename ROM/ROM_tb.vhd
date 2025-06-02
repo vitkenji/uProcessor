@@ -5,12 +5,12 @@ use ieee.numeric_std.all;
 entity ROM_tb is
 end;
 
-architecure ROM_tb_arch of ROM_tb is
+architecture ROM_tb_arch of ROM_tb is
     component ROM
     port (
         clk : in std_logic;
         address : in unsigned(6 downto 0);
-        data : out unsigned(16 downto 0);
+        data : out unsigned(16 downto 0)
     );
     end component;
 
@@ -55,6 +55,15 @@ begin
 
     process
     begin
+        address <= "0000000";
+        wait for 200 ns;
+        address <= "0000001";
+        wait for 200 ns;
+        address <= "0000010";
+        wait for 200 ns;
+        address <= "0000011";
+        wait for 200 ns;
+        address <= "0000100";
         wait;
     end process;
 end architecture ROM_tb_arch;
