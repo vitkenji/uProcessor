@@ -37,31 +37,29 @@ architecture PC_top_level_arch of PC_top_level is
     );
     end component;    
     
-    signal pc_out : unsigned (6 downto 0);
-    signal pc_in : unsigned (6 downto 0);
-    signal selector : std_logic;
+    signal pc_out, adder_out, mux_out: unsigned (6 downto 0);
 
     begin
         uut_MUX_2x1_7bits : MUX_2x1_7bits port map (
             selector => selector,
             input_0 => top_data_in,
-            input_1 => pc_in,
+            input_1 => adder_out,
+            output => mux_out
         );
 
         uut_PC : PC port map (
             clk => clk,
             rst => rst,
             write_enable => write_enable,
-            data_in => pc_in,
+            data_in => mux_out,
             data_out => pc_out
         );
         
         uut_Adder : Adder port map (
             data_in => pc_out,
-            data_out => pc_in
+            data_out => adder_out
         );
-        pc_in <= top_data_in;
 
-
+        top_data_out <= adder_out;
 
 end architecture;
