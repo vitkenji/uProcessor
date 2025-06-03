@@ -1,16 +1,37 @@
 v 4
-file . "main_tb.vhd" "ff120c73dbc980e0ec9221818d3159d725e3cdb5" "20250522201324.036":
-  entity main_tb at 1( 0) + 0 on 177;
-  architecture main_tb_arch of main_tb at 8( 108) + 0 on 178;
-file . "Registers/bancoReg.vhd" "4afd05880500bc222c1718d9b3d2564afcc9de00" "20250522201323.997":
-  entity bancoreg at 1( 0) + 0 on 173;
-  architecture a_bancoreg of bancoreg at 26( 718) + 0 on 174;
-file . "main.vhd" "011833d8164a57bfa21efbec7b71c75e2e080499" "20250522201324.016":
-  entity main at 1( 0) + 0 on 175;
-  architecture a_main of main at 26( 663) + 0 on 176;
-file . "ALU/ALU.vhd" "8c6c9322d646e0bc075e7d41773925134e343392" "20250522201323.971":
-  entity alu at 1( 0) + 0 on 169;
-  architecture alu_arch of alu at 20( 621) + 0 on 170;
-file . "Registers/reg16bits.vhd" "07a8684186b095c40e4ad643b1ca65c78322eb15" "20250522201323.994":
-  entity reg16bits at 1( 0) + 0 on 171;
-  architecture a_reg16bits of reg16bits at 16( 323) + 0 on 172;
+file . "PC/Adder.vhd" "2dc91baf4ebe03854c59a155318631045609efeb" "20250603203644.897":
+  entity adder at 1( 0) + 0 on 231;
+  architecture adder_arch of adder at 12( 206) + 0 on 232;
+file . "ROM/ROM.vhd" "b1702c3ca0931137ba2a3e136115291b9b94d9bc" "20250603210058.496":
+  entity rom at 1( 0) + 0 on 257;
+  architecture rom_arch of rom at 13( 206) + 0 on 258;
+file . "main_tb.vhd" "909f1f654e2ac56677776a385a6dba90d22c1ecb" "20250603203644.879":
+  entity main_tb at 1( 0) + 0 on 225;
+  architecture main_tb_arch of main_tb at 8( 101) + 0 on 226;
+file . "Registers/bancoReg.vhd" "08e23f86c8e899c1d9fe02e25a666eb8335e9d4f" "20250603203644.865":
+  entity bancoreg at 1( 0) + 0 on 221;
+  architecture a_bancoreg of bancoreg at 26( 693) + 0 on 222;
+file . "main.vhd" "9ffa4c1421ea0e9559ce8108d102995b5a0bb0ba" "20250603203644.871":
+  entity main at 1( 0) + 0 on 223;
+  architecture a_main of main at 26( 638) + 0 on 224;
+file . "ALU/ALU.vhd" "6063fa7627cb2b605cc33b76db74f394c4b592fb" "20250603203644.855":
+  entity alu at 1( 0) + 0 on 217;
+  architecture alu_arch of alu at 20( 602) + 0 on 218;
+file . "Registers/reg16bits.vhd" "fa80dae7b14d5250e46c8c8e41a2ff38b8ac2f8d" "20250603203644.864":
+  entity reg16bits at 1( 0) + 0 on 219;
+  architecture a_reg16bits of reg16bits at 16( 308) + 0 on 220;
+file . "PC_top_level.vhd" "21e7f2936b716f86727982ab6a7e45131a5b5b81" "20250603210106.026":
+  entity pc_top_level at 1( 0) + 0 on 259;
+  architecture pc_top_level_arch of pc_top_level at 13( 277) + 0 on 260;
+file . "PC/PC.vhd" "d154187f7d20370425f10dd39e555a0372094c43" "20250603203644.891":
+  entity pc at 1( 0) + 0 on 229;
+  architecture pc_arch of pc at 15( 296) + 0 on 230;
+file . "State_Machine/State_Machine.vhd" "6d513f9401c8d4adc0f18a2394549c6d9ddfbb51" "20250603203644.909":
+  entity state_machine at 1( 0) + 0 on 235;
+  architecture state_machine_arch of state_machine at 13( 210) + 0 on 236;
+file . "PC/MUX_2x1_7bits.vhd" "ed6738e895641565cec4cfacb046119d3c1e0c5a" "20250603203644.903":
+  entity mux_2x1_7bits at 1( 0) + 0 on 233;
+  architecture mux_2x1_7bits_arch of mux_2x1_7bits at 13( 255) + 0 on 234;
+file . "PC_top_level_tb.vhd" "9109764dc1f96ede95353aeb588aa88ebab3629a" "20250603210112.177":
+  entity pc_top_level_tb at 1( 0) + 0 on 261;
+  architecture pc_top_level_tb_arch of pc_top_level_tb at 8( 109) + 0 on 262;

@@ -61,7 +61,7 @@ begin
     begin
         write_enable <= '1';
         selector <= '0';
-        data_in <= "0001000";
+        data_in <= "0000000";
         wait for 200 ns;
         selector <= '1';
         wait;

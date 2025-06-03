@@ -20,6 +20,14 @@ architecture PC_top_level_arch of PC_top_level is
     );
     end component;
 
+    component ROM
+    port (
+        clk : in std_logic;
+        address : in unsigned(6 downto 0);
+        data : out unsigned(16 downto 0)
+    );
+    end component;
+
     component PC
     port (
         clk : in std_logic;
@@ -38,6 +46,7 @@ architecture PC_top_level_arch of PC_top_level is
     end component;    
     
     signal pc_out, adder_out, mux_out: unsigned (6 downto 0);
+    signal rom_out : unsigned (16 downto 0);
 
     begin
         uut_MUX_2x1_7bits : MUX_2x1_7bits port map (
@@ -60,6 +69,11 @@ architecture PC_top_level_arch of PC_top_level is
             data_out => adder_out
         );
 
+        uut_ROM : ROM port map (
+            clk => clk,
+            address => pc_out,
+            data => rom_out
+        );
         top_data_out <= adder_out;
 
 end architecture;
