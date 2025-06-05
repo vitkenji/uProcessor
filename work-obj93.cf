@@ -2,9 +2,9 @@ v 4
 file . "Main/Main.vhd" "63e0a6c12f7d67c40faeb2b352bcb769fc1ef17c" "20250605012329.861":
   entity main at 1( 0) + 0 on 47;
   architecture main_arch of main at 13( 255) + 0 on 48;
-file . "ROM/ROM.vhd" "b1702c3ca0931137ba2a3e136115291b9b94d9bc" "20250605003333.145":
-  entity rom at 1( 0) + 0 on 25;
-  architecture rom_arch of rom at 13( 206) + 0 on 26;
+file . "ROM/ROM.vhd" "aa1427104cc2834ad87619003dd2ccaeb79b453b" "20250605013737.645":
+  entity rom at 1( 0) + 0 on 55;
+  architecture rom_arch of rom at 13( 206) + 0 on 56;
 file . "Registers/reg16bits.vhd" "fa80dae7b14d5250e46c8c8e41a2ff38b8ac2f8d" "20250605003309.162":
   entity reg16bits at 1( 0) + 0 on 21;
   architecture a_reg16bits of reg16bits at 16( 308) + 0 on 22;
@@ -29,6 +29,9 @@ file . "Registers/bancoReg.vhd" "08e23f86c8e899c1d9fe02e25a666eb8335e9d4f" "2025
 file . "State_Machine/State_Machine.vhd" "6d513f9401c8d4adc0f18a2394549c6d9ddfbb51" "20250605003342.873":
   entity state_machine at 1( 0) + 0 on 27;
   architecture state_machine_arch of state_machine at 13( 210) + 0 on 28;
-file . "Main/Main_tb.vhd" "1cc88d83b2befeb14bc66b31a0eb57b4ffb066fd" "20250605012335.021":
-  entity main_tb at 1( 0) + 0 on 49;
-  architecture main_tb_arch of main_tb at 8( 101) + 0 on 50;
+file . "Main/Main_tb.vhd" "1cc88d83b2befeb14bc66b31a0eb57b4ffb066fd" "20250605015607.178":
+  entity main_tb at 1( 0) + 0 on 61;
+  architecture main_tb_arch of main_tb at 8( 101) + 0 on 62;
+file . "Registers/Accumulator.vhd" "862d474d958d25e19126780724f715e167ef8049" "20250605015141.585":
+  entity accumulator at 1( 0) + 0 on 59;
+  architecture accumulator_arch of accumulator at 15( 306) + 0 on 60;

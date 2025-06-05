@@ -55,6 +55,39 @@ architecture Main_arch of Main is
     );
     end component;
 
+    component ALU
+    port (
+        input_0, input_1 : in unsigned (15 downto 0);
+        operation_selector: in unsigned (1 downto 0);
+        carry, greater_equal, less_equal: out std_logic; 
+        alu_result : out unsigned (15 downto 0)
+    );
+    end component;
+
+    -- component Accumulator
+    -- port (
+    --     clk: in std_logic;
+    --     rst : in std_logic;
+    --     write_enable : in std_logic;
+    --     data_in : in unsigned (15 downto 0);
+    --     data_out : out unsigned (15 downto 0)
+    -- );
+    -- end component;
+
+    -- component bancoReg
+    -- port(
+    --     clk: in std_logic;
+    --     rst: in std_logic;
+
+    --     reg_read: in unsigned(2 downto 0);
+    --     data_out: out unsigned(15 downto 0); 
+
+    --     write_enable: in std_logic;
+    --     data_write: in unsigned(15 downto 0);
+    --     reg_write: in unsigned(2 downto 0)
+    -- );
+    -- end component;
+
     signal pc_out, adder_out, mux_pc_out, mux_jump_out: unsigned (6 downto 0);
     signal rom_out : unsigned (16 downto 0);
     signal jump_enable : std_logic;
@@ -101,6 +134,10 @@ architecture Main_arch of Main is
             instruction => rom_out,
             jump_enable => jump_enable,
             pc_write_enable => pc_write_enable
+        );
+
+        uut_ALU : ALU port map (
+
         );
 
         top_data_out <= adder_out;

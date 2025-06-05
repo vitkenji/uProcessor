@@ -13,24 +13,23 @@ entity ALU is
         input_0, input_1 : in unsigned (15 downto 0);
         operation_selector: in unsigned (1 downto 0);
         carry, greater_equal, less_equal: out std_logic; 
-        saida : out unsigned (15 downto 0)
+        alu_result : out unsigned (15 downto 0)
     );
 end entity;
 
 architecture ALU_arch of ALU is
 
-    -- Sinais auxiliares
     signal input_0_17bits, input_1_17bits, sum_result_17bits, sub_result_17bits : unsigned(16 downto 0);
 
 begin
-    -- Formando 17 bits para armazenar o carry junto com o resultado da operação
+
     input_0_17bits <= '0' & input_0;
     input_1_17bits <= '0' & input_1;
 
-    sum_result_17bits <= input_0_17bits + input_1_17bits; -- Carry
-    sub_result_17bits <= input_0_17bits - input_1_17bits; -- Borrow
+    sum_result_17bits <= input_0_17bits + input_1_17bits;
+    sub_result_17bits <= input_0_17bits - input_1_17bits; 
 
-    saida <= input_0 + input_1 when operation_selector = "00" else
+    alu_result <= input_0 + input_1 when operation_selector = "00" else
               input_0 - input_1 when operation_selector = "01" else
               input_0 and input_1 when operation_selector = "10" else
               input_0 xor input_1 when operation_selector = "11" else
