@@ -1,7 +1,0 @@
-v 4
-file . "bancoReg.vhd" "41f95d4e2ab2783123f7a034a74dae5067f0b3b2" "20250522140930.901":
-  entity bancoreg at 1( 0) + 0 on 13;
-  architecture a_bancoreg of bancoreg at 26( 693) + 0 on 14;
-file . "reg16bits.vhd" "fa80dae7b14d5250e46c8c8e41a2ff38b8ac2f8d" "20250522140913.248":
-  entity reg16bits at 1( 0) + 0 on 11;
-  architecture a_reg16bits of reg16bits at 16( 308) + 0 on 12;

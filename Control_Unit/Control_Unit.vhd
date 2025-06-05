@@ -7,7 +7,8 @@ entity Control_Unit is
         instruction : in unsigned (16 downto 0);
         clk : in std_logic;
         rst : in std_logic;
-        jump_enable : out std_logic
+        jump_enable : out std_logic;
+        pc_write_enable : out std_logic
     );
 end entity;
 
@@ -34,5 +35,7 @@ architecture Control_Unit_arch of Control_Unit is
         opcode <= instruction (3 downto 0);
         jump_enable <= '1' when state_s = '1' and opcode = "1111" else
                        '0'; 
-        
+        pc_write_enable <= '1' when state_s = '1' else
+                            '0';
+
 end architecture;
