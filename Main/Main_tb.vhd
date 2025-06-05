@@ -8,15 +8,13 @@ end entity;
 architecture Main_tb_arch of Main_tb is
     component Main
     port (
-        clk, rst, selector: in std_logic;
-        top_data_in : in unsigned (6 downto 0);
-        top_data_out : out unsigned (6 downto 0)
+        clk, rst: in std_logic
     );
     end component;
 
     constant period_time : time := 100 ns;
     signal finished : std_logic := '0';
-    signal clk , reset, rst : std_logic;
+    signal clk , reset : std_logic;
     signal data_in : unsigned (6 downto 0);
     signal data_out : unsigned (6 downto 0);
     signal selector : std_logic;
@@ -24,10 +22,7 @@ architecture Main_tb_arch of Main_tb is
 begin
     uut : Main port map(
         clk => clk,
-        rst => rst,
-        selector => selector,
-        top_data_in => data_in,
-        top_data_out => data_out
+        rst => reset
     );
 
     reset_global : process

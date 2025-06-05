@@ -10,19 +10,19 @@ architecture State_Machine_tb_arch of State_Machine_tb is
     port (
         clk : in std_logic;
         rst : in std_logic;
-        state : out std_logic
+        state : out unsigned (1 downto 0)
     );
     end component;
 
     constant period_time : time := 100 ns;
     signal finished : std_logic := '0';
     signal clk , reset, rst : std_logic;
-    signal state : std_logic;
+    signal state : unsigned (1 downto 0);
 
 begin
     uut : State_Machine port map (
         clk => clk,
-        rst => rst,
+        rst => reset,
         state => state
     );
 
@@ -54,6 +54,7 @@ begin
 
     process
     begin
+        rst <= '0';
         wait for 200 ns;
         wait;
     end process;

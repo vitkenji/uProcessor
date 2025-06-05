@@ -13,15 +13,19 @@ entity PC is
 end entity;
 
 architecture PC_arch of PC is
+    signal data : unsigned (6 downto 0) := (others => '0');
     begin
         process(clk, rst, write_enable)
         begin
             if rst = '1' then
-                data_out <= "0000000";
+                data <= "0000000";
             elsif write_enable = '1' then
                 if (rising_edge(clk)) then
-                    data_out <= data_in;
+                    data <= data_in;
                 end if;
             end if;
         end process;
+
+        data_out <= data;
+        
 end architecture;
