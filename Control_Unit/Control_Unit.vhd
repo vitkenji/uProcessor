@@ -9,7 +9,11 @@ entity Control_Unit is
         rst : in std_logic;
         jump_enable : out std_logic;
         pc_write_enable : out std_logic;
-        ir_write_enable : out std_logic
+        ir_write_enable : out std_logic;
+        accumulator_write_enable : out std_logic;
+        register_write_enable : out std_logic;
+        register_read_enable : out std_logic;
+        ALU_operation : out unsigned (2 downto 0)
     );
 end entity;
 
@@ -43,6 +47,15 @@ architecture Control_Unit_arch of Control_Unit is
                        
         pc_write_enable <= '1' when state_s = "01" else
                             '0';
+                        
+        accumulator_write_enable <= '1' when state_s = "10" else
+                                    '0';
+
+        ALU_operation <= "000" when state_s = "10" else
+                         "001" when state_s = "10" else
+                         "010" when state_s = "10" else
+                         "011" when state_s = "10" else
+                         "100";
 
 
 end architecture;
