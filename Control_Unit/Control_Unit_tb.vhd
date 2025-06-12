@@ -109,7 +109,7 @@ begin
 
         -- Teste 1: JUMP (opcode = "1111")
         -- Instrução: 1111 0101010 000000
-        -- Espera: jump_enable = '1', destino_jump = "0101010", pc_write_enable = '1'
+        -- Espera: jump_enable = '1', destino_jump = "0101010 = 42", pc_write_enable = '1'
         instruction <= "11110101010000000";
         wait for clk_period * 3;
 

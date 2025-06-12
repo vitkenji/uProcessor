@@ -7,6 +7,7 @@ SRC_ROM=ROM/ROM.vhd
 SRC_PC=PC/PC.vhd
 SRC_ADDER=PC/Adder.vhd
 SRC_MUX=MUX/MUX_2x1_7bits.vhd
+SRC_MUX_16=MUX/MUX_2x1_16bits.vhd
 SRC_STATE=State_Machine/State_Machine.vhd
 # SRC_PC_TOP=PC_top_level.vhd
 # SRC_PC_TB=PC_top_level_tb.vhd
@@ -14,8 +15,8 @@ SRC_CONTROL=Control_Unit/Control_Unit.vhd
 SRC_CONTROL_TB=Control_Unit/Control_Unit_tb.vhd
 
 # Entidades
-ENTITIES=Control_Unit
-TB_ENTITY=Control_Unit_tb
+ENTITIES=main
+TB_ENTITY=main_tb
 
 # Arquivo de waveform
 WAVE=$(TB_ENTITY).ghw
@@ -33,6 +34,7 @@ analyze:
 	ghdl -a $(SRC_PC)
 	ghdl -a $(SRC_ADDER)
 	ghdl -a $(SRC_MUX)
+	ghdl -a $(SRC_MUX_16)
 	ghdl -a $(SRC_STATE)
 	ghdl -a $(SRC_CONTROL)
 	ghdl -a $(SRC_CONTROL_TB)
@@ -54,8 +56,10 @@ elaborate: analyze
 	ghdl -e ROM
 	ghdl -e Adder
 	ghdl -e MUX_2x1_7bits
+	ghdl -e MUX_2x1_16bits
 	ghdl -e PC
 	ghdl -e State_Machine
+	ghdl -e Control_Unit
 	ghdl -e $(TB_ENTITY)
 
 # Elaboração específica para Control_Unit

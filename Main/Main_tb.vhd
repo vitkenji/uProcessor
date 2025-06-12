@@ -15,9 +15,9 @@ architecture Main_tb_arch of Main_tb is
     constant period_time : time := 100 ns;
     signal finished : std_logic := '0';
     signal clk , reset : std_logic;
-    signal data_in : unsigned (6 downto 0);
-    signal data_out : unsigned (6 downto 0);
-    signal selector : std_logic;
+    --signal data_in : unsigned (6 downto 0);
+    --signal data_out : unsigned (6 downto 0);
+    --signal selector : std_logic;
     
 begin
     uut : Main port map(
@@ -51,12 +51,5 @@ begin
         wait;
     end process clk_proc;
 
-    process
-    begin
-        selector <= '0';
-        data_in <= "0000000";
-        wait for 300 ns;
-        selector <= '1';
-        wait;
-    end process;
+
 end architecture;

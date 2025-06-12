@@ -57,6 +57,7 @@ architecture Main_arch of Main is
             accumulator_out : in unsigned (15 downto 0);
             clk : in std_logic;
             rst : in std_logic;
+            
             -- Sinais de controle
             jump_enable : out std_logic;
             mov_enable_accumulator : out std_logic;
@@ -64,6 +65,7 @@ architecture Main_arch of Main is
             ir_write_enable : out std_logic;
             accumulator_write_enable : out std_logic;
             reg_write_enable : out std_logic;
+            
             -- Dados de controle
             destino_jump : out unsigned (6 downto 0);
             reg_data_write : out unsigned (15 downto 0);
@@ -109,7 +111,7 @@ architecture Main_arch of Main is
         port (
             input_0, input_1 : in unsigned (15 downto 0);
             operation_selector: in unsigned (2 downto 0);
-            carry, greater_equal, less_equal: out std_logic; 
+            carry, sinal, zero: out std_logic; 
             alu_result : out unsigned (15 downto 0)
         );
      end component;
@@ -133,7 +135,7 @@ architecture Main_arch of Main is
     signal ALU_operation : unsigned (2 downto 0);
 
     -- Flags da ALU
-    signal carry, greater_equal, less_equal : std_logic;
+    signal carry, sinal, zero : std_logic;
 
     begin
         uut_MUX_jump : MUX_2x1_7bits port map (
@@ -208,8 +210,8 @@ architecture Main_arch of Main is
             input_1 => bank_register_out,  -- Registrador como segundo operando
             operation_selector => ALU_operation,
             carry => carry,
-            greater_equal => greater_equal,
-            less_equal => less_equal,
+            sinal => sinal,
+            zero => zero,
             alu_result => alu_out
         );
 

@@ -1,14 +1,14 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Wed Jun 11 15:49:11 2025
+[*] Thu Jun 12 16:17:24 2025
 [*]
 [dumpfile] "/mnt/c/Users/Adryan/Desktop/Adryan/Estudo/Faculdade/5ºPeriodo/ArquiteturaDeComputadores/TRABALHO_DUPLA/uProcessor/Control_Unit_tb.ghw"
-[dumpfile_mtime] "Wed Jun 11 15:35:00 2025"
-[dumpfile_size] 8668
+[dumpfile_mtime] "Wed Jun 11 15:49:51 2025"
+[dumpfile_size] 8664
 [savefile] "/mnt/c/Users/Adryan/Desktop/Adryan/Estudo/Faculdade/5ºPeriodo/ArquiteturaDeComputadores/TRABALHO_DUPLA/uProcessor/Control_Unit_tb_configGHW.gtkw"
 [timestart] 0
 [size] 1908 999
-[pos] -298 1
+[pos] 0 1
 *-28.000000 200000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.control_unit_tb.
@@ -46,7 +46,7 @@ top.control_unit_tb.pc_write_enable
 #{top.control_unit_tb.uut.reg[2:0]} top.control_unit_tb.uut.reg[2] top.control_unit_tb.uut.reg[1] top.control_unit_tb.uut.reg[0]
 @22
 #{top.control_unit_tb.accumulator_out[15:0]} top.control_unit_tb.accumulator_out[15] top.control_unit_tb.accumulator_out[14] top.control_unit_tb.accumulator_out[13] top.control_unit_tb.accumulator_out[12] top.control_unit_tb.accumulator_out[11] top.control_unit_tb.accumulator_out[10] top.control_unit_tb.accumulator_out[9] top.control_unit_tb.accumulator_out[8] top.control_unit_tb.accumulator_out[7] top.control_unit_tb.accumulator_out[6] top.control_unit_tb.accumulator_out[5] top.control_unit_tb.accumulator_out[4] top.control_unit_tb.accumulator_out[3] top.control_unit_tb.accumulator_out[2] top.control_unit_tb.accumulator_out[1] top.control_unit_tb.accumulator_out[0]
-@29
+@28
 top.control_unit_tb.reg_write_enable
 top.control_unit_tb.accumulator_write_enable
 top.control_unit_tb.ir_write_enable
