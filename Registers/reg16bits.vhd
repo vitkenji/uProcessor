@@ -15,6 +15,7 @@ end entity reg16bits;
 
 architecture a_reg16bits of reg16bits is
     signal registro: unsigned(15 downto 0);
+    
 begin
 
     process(clk, rst, write_enable)

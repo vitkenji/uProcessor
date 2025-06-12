@@ -1,3 +1,5 @@
+-- Armazena 128 (2^7) instruções (17 bits)
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -56,11 +58,13 @@ architecture ROM_arch of ROM is
         40  => "00000000000101000",
         others => (others =>'0')
     );
+    
+begin
+    process(clk)
     begin
-        process(clk)
-        begin
-            if (rising_edge(clk)) then
-                data <= ROM_content(to_integer(address));
-            end if;
-        end process;
+        if (rising_edge(clk)) then
+            data <= ROM_content(to_integer(address));
+        end if;
+    end process;
+
 end architecture;

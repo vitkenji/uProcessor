@@ -1,0 +1,8 @@
+"OPCODE (bin)","Instrução","Funcionalidade","Sinais Ativados/Desativados"
+"1111","JUMP","Salto incondicional","jump_enable=1,destino_jump=<endereço>,pc_write_enable=1"
+"0001","LOAD (LD)","Carrega valor imediato no registrador","reg_write_enable=1,reg_write=<reg>,reg_data_write=<constante extendida>,pc_write_enable=1"
+"0100","MOV Accumulator","Move valor do registrador p/ acumulador","accumulator_write_enable=1,mov_enable_accumulator=1,reg_read=<reg>,pc_write_enable=1"
+"0110","MOV Register","Move valor do acumulador p/ registrador","reg_write_enable=1,reg_write=<reg>,reg_data_write=<accumulator_out>,pc_write_enable=1"
+"0010","ADD","Soma registrador ao acumulador","reg_read=<reg>,ALU_operation=ADD,accumulator_write_enable=1,pc_write_enable=1"
+"0011","SUB","Subtrai registrador do acumulador","reg_read=<reg>,ALU_operation=SUB,accumulator_write_enable=1,pc_write_enable=1"
+"0101","COMP","Comparação (subtração sem escrita)","reg_read=<reg>,ALU_operation=CMPR,pc_write_enable=1"

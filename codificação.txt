@@ -1,0 +1,153 @@
+Codificações das instruções do processador
+
+- Cada instrução tem 17bits
+- Opcode são os 4 bits mais significativos
+- Constantes precisam estar sinalizadas e em complemento de 2
+- x indica que os bits não são usados
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: Jump absoluto
+\\ Salto de instrução direto para um endereço absoluto
+
+[o] Opcode: 1111 | 4 bits (16-13)
+[e] Endereço: 7 bits (12-6)
+
+oooo eeeeeee xxxxxx
+
+Exemplo:
+    - JUMP 0000100 (1111 0000100 00000) 
+    - Opcode: 1111 (JUMP)
+    - Endereço: 0000100 (4 em binário)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: Carga de Constante 
+\\ Carrega diretamente um valor imediato no registrador - LD, r5, 25
+
+[o] Opcode: 0001 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+[c] Const: 10 bits (9-0)
+
+oooo rrr cccccccccc
+
+Limitações: 
+    - Só carrega constantes dentro da faixa de -512 a 511 (Constante de 10 bits (Complemento de 2) com sinal)
+    - Só carrega nos registradore r0 a r5 (6 registradores, 3 bits) \\ Colocar um bloqueio para não carregar em r6 e r7 na unidade de controle
+
+Exemplo:
+    - LD, r5, 25 (0001 101 0000011001) 
+    - Opcode: 0001 (LD)
+    - Reg: 101 (r5)
+    - Const: 0000011001 (25 em complemento de 2 sinalizado)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: MOV acumulador (Acumulador recebe)
+\\ Acumulador recebe valor de Rn - MOV A, rn
+
+[o] Opcode: 0100 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx
+
+Limitações:
+    - Só pode ser feito entre acumulador e registrador (r0 a r5)
+
+Exemplo:
+    - MOV A, r5 (0100 101) 
+    - Opcode: 0100 (MOV)
+    - Reg: 101 (r5)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: MOV RN (Rn recebe)
+\\ Rn recebe valor do acumulador - MOV rn, A
+
+[o] Opcode: 0110 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx
+
+Limitações:
+    - Só pode ser feito entre acumulador e registrador (r0 a r5)
+
+Exemplo:
+    - MOV r5, A (0110 101) 
+    - Opcode: 0110 (MOV)
+    - Reg: 101 (r5)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: ADD
+\\ Add com dois operadores apenas - ADD A, r5, acumulador
+\\ Apenas entre registradores, não é possível somar com constantes
+
+\\ Como sempre tem o acumulador, não é necessário especificar no código da instrução - ADD r5
+
+[o] Opcode: 0010 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx
+
+Limitações:
+    - Só pode ser feito entre registradores (r0 a r5)
+
+Exemplo:
+    - ADD r5 (0010 101) 
+    - Opcode: 0010 (ADD)
+    - Reg: 101 (r5)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: SUB
+\\ Subtração com dois operandos apenas - SUB A, r5
+\\ Apenas entre registradores, não é possível subtrair com constantes
+
+\\ Como sempre tem o acumulador, não é necessário especificar no código da instrução - SUB r5
+
+[o] Opcode: 0011 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx 
+
+Limitações:
+    - Só pode ser feito entre registradores (r0 a r5)
+
+Exemplo:
+    - SUB r5 (0011 101) 
+    - Opcode: 0011 (SUB)
+    - Reg: 101 (r5)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: Comparações
+\\ Comparação com CMPR
+\\ Apenas entre registradores, não é possível comparar com constantes
+\\ Realiza uma comparação subtraindo os dois operandos e alterando as flags de acordo, sem gravar o resultado da subtração em nenhum lugar.
+
+[o] Opcode: 0101 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx
+
+Limitações:
+    - Só pode ser feito entre registradores (r0 a r5)
+
+Exemplo:
+    - CMPR r5 (0101 101) 
+    - Opcode: 0101 (CMPR)
+    - Reg: 101 (r5)
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## LAB 6
+
+Instrução: BLE
+
+Instrução: BHS
+
+Instrução: Saltos (Incondicional é absoluto e condicional é relativo)

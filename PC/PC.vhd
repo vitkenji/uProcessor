@@ -1,3 +1,7 @@
+-- Armazena o endereço da próxima instrução a ser executada (Registrador de 7 bits)
+-- As instruções são armazenadas em uma ROM de 128 posições, onde cada posição contém uma instrução de 17 bits
+
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -14,18 +18,19 @@ end entity;
 
 architecture PC_arch of PC is
     signal data : unsigned (6 downto 0) := (others => '0');
-    begin
-        process(clk, rst, write_enable)
-        begin
-            if rst = '1' then
-                data <= "0000000";
-            elsif write_enable = '1' then
-                if (rising_edge(clk)) then
-                    data <= data_in;
-                end if;
-            end if;
-        end process;
 
-        data_out <= data;
+begin
+    process(clk, rst, write_enable)
+    begin
+        if rst = '1' then
+            data <= "0000000";
+        elsif write_enable = '1' then
+            if (rising_edge(clk)) then
+                data <= data_in;
+            end if;
+        end if;
+    end process;
+
+    data_out <= data;
         
 end architecture;

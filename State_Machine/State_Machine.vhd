@@ -25,5 +25,6 @@ begin
             end if;
         end if;
     end process;
+    
     state <= state_s;
 end architecture;

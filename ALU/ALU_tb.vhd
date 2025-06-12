@@ -10,77 +10,85 @@ architecture ALU_tb_arch of ALU_tb is
     port (
         input_0, input_1 : in unsigned (15 downto 0);
         operation_selector : in unsigned (2 downto 0);
-        carry, greater_equal, less_equal : out std_logic;
+        carry, sinal, zero : out std_logic;
         alu_result: out unsigned (15 downto 0)
     );
     end component;
 
     signal input_0, input_1 : unsigned (15 downto 0);
     signal operation_selector : unsigned (2 downto 0);
-    signal carry, greater_equal, less_equal : std_logic;
+    signal carry, sinal, zero : std_logic;
     signal alu_result : unsigned (15 downto 0);
 
 begin
     uut : ALU port map(
-    input_0 => input_0,
-    input_1 => input_1,
-    operation_selector => operation_selector,
-    carry => carry,
-    greater_equal => greater_equal,
-    less_equal => less_equal,
-    alu_result => alu_result
-);
+        input_0 => input_0,
+        input_1 => input_1,
+        operation_selector => operation_selector,
+        carry => carry,
+        sinal => sinal,
+        zero => zero,
+        alu_result => alu_result
+    );
+    
     process
     begin
         -- Caso de Teste 1: Soma
-        -- Input_0: 7(0111) | Input_1: 1(0001) | Resultado esperado: 8(0000000000001000)
-        operation_selector <= "000";
+        -- Input_0: 7 | Input_1: 1 | Resultado esperado: 8
+        operation_selector <= "010";
         input_0 <= "0000000000000111"; -- 7
         input_1 <= "0000000000000001"; -- 1
         wait for 20 ns;
 
         -- Caso de Teste 2: Subtração
-        -- Input_0: 12(1100) | Input_1: 2(0010) | Resultado esperado: 10(0000000000001010)
-        operation_selector <= "001";
+        -- Input_0: 12 | Input_1: 2 | Resultado esperado: 10
+        operation_selector <= "011";
         input_0 <= "0000000000001100"; -- 12
         input_1 <= "0000000000000010"; -- 2
         wait for 20 ns;
 
-        -- Caso de Teste 3: And
-        -- Input_0: 0010001101101110 | Input_1: 0100000101001111 | Resultado esperado: 0000000101001110
-        operation_selector <= "010";
-        input_0 <= "0010001101101110";
-        input_1 <= "0100000101001111"; 
-        wait for 20 ns;
-
-        -- Caso de Teste 4: Xor
-        -- Input_0: 0010001101101110 | Input_1: 0100000101001111 | Resultado esperado: 0110001000100001
-        operation_selector <= "011";
-        input_0 <= "0010001101101110";
-        input_1 <= "0100000101001111"; 
-        wait for 20 ns;
-
-        -- Caso de Teste 5: Soma com carry | Resultado > 65535 (1111111111111111)
-        -- Input_0: 50000(1100001101010000) | Input_1: 30000(0111010100110000) | Resultado esperado: 80000(0011100010000000 -> 14464 Sem o bit 16) e carry 1
-        operation_selector <= "000";
-        input_0 <= "1100001101010000";
-        input_1 <= "0111010100110000"; 
-        wait for 20 ns;
-
-        -- Caso de Teste 6: Subtração com borrow (carry) | Quando Input_0 < Input_1 em uma subtração unsigned de 16 bits, ocorre um borrow e a flag carry é acionada. O sub_result é calculado como (Input_0 - Input_1) mod 2^17
-        -- Input_0: 2(0000000000000010) | Input_1: 5(0000000000000101) | Resultado esperado: 2-5 mod 2^16(1111111111111101) e carry 1
+        -- Caso de Teste 3: Comparação (subtração para flags)
+        -- Input_0: 5 | Input_1: 5 | Resultado esperado: 0, zero = '1'
         operation_selector <= "001";
-        input_0 <= "0000000000000010";
-        input_1 <= "0000000000000101"; 
+        input_0 <= "0000000000000101"; -- 5
+        input_1 <= "0000000000000101"; -- 5
         wait for 20 ns;
 
-        -- Casos de Testes Extras
+        -- Caso de Teste 4: Soma com carry
+        -- Input_0: 50000 | Input_1: 30000 | Resultado esperado: overflow, carry = '1'
+        operation_selector <= "010";
+        input_0 <= "1100001101010000"; -- 50000
+        input_1 <= "0111010100110000"; -- 30000
+        wait for 20 ns;
 
-        -- Caso de Teste: Soma sem carry, porem próximo| Resultado < 65535 < 65500
-        -- Input_0: 65500() | Input_1: 25() | Resultado esperado: 65525()
+        -- Caso de Teste 5: Subtração com borrow
+        -- Input_0: 2 | Input_1: 5 | Resultado esperado: negativo, carry = '1', sinal = '1'
+        operation_selector <= "011";
+        input_0 <= "0000000000000010"; -- 2
+        input_1 <= "0000000000000101"; -- 5
+        wait for 20 ns;
 
-        -- Caso de Teste: Soma com carry, porem próximo| 66000 > Resultado > 65535
-        -- Input_0: 65535() | Input_1: 100() | Resultado esperado: 65635()            
+        -- Caso de Teste 6: Resultado zero
+        -- Input_0: 10 | Input_1: 10 | Resultado esperado: 0, zero = '1'
+        operation_selector <= "011";
+        input_0 <= "0000000000001010"; -- 10
+        input_1 <= "0000000000001010"; -- 10
+        wait for 20 ns;
+
+        -- Caso de Teste 7: Resultado negativo (sinal = '1')
+        -- Input_0: 5 | Input_1: 15 | Resultado esperado: negativo, sinal = '1'
+        operation_selector <= "011";
+        input_0 <= "0000000000000101"; -- 5
+        input_1 <= "0000000000001111"; -- 15
+        wait for 20 ns;
+
+        -- Caso de Teste 8: Operação inválida
+        -- operation_selector: "100" | Resultado esperado: 0
+        operation_selector <= "100";
+        input_0 <= "0000000000001111"; -- 15
+        input_1 <= "0000000000000011"; -- 3
+        wait for 20 ns;
+
         wait;
     end process;    
-end architecture;    
+end architecture;
