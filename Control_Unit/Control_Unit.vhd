@@ -99,7 +99,7 @@ architecture Control_Unit_arch of Control_Unit is
 
         -- Jump
         jump_enable <= '1' when state_s = "10" and opcode = JUMP_OP else '0'; 
-        destino_jump <= jump_adress; -- Define o destino do salto (NÃO SEI SE PRECISA CONDICIONAR, POIS ESSE VALOR SO É UTILIZADO COM O JUMP ENABLE 1)
+        destino_jump <= jump_adress when state_s = "10" and opcode = JUMP_OP else (others => '0'); -- Define o destino do salto 
 
         -- Load [Carregar um valor imediato no registrador indicado]
         reg_write_enable_ld <= '1' when state_s = "10" and opcode = LD_OP else '0'; 
