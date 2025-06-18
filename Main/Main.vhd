@@ -69,7 +69,6 @@ architecture Main_arch of Main is
             -- Dados de controle
             destino_jump : out unsigned (6 downto 0);
             reg_data_write : out unsigned (15 downto 0);
-            reg_write : out unsigned (2 downto 0);
             reg_read : out unsigned (2 downto 0);
             ALU_operation : out unsigned (2 downto 0)
         );
@@ -184,7 +183,6 @@ architecture Main_arch of Main is
             reg_write_enable => reg_write_enable,
             destino_jump => destino_jump,
             reg_data_write => reg_data_write,
-            reg_write => reg_write,
             reg_read => reg_read,
             ALU_operation => ALU_operation
         );
@@ -221,7 +219,7 @@ architecture Main_arch of Main is
             reg_read => reg_read,  -- Endereço vem da Control_Unit
             data_out => bank_register_out,
             write_enable => reg_write_enable,
-            reg_write => reg_write,  -- Endereço vem da Control_Unit
+            reg_write => ir_out(12 downto 10),
             data_write => reg_data_write  -- Dados vem da Control_Unit
         );
 

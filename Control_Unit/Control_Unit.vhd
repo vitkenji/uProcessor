@@ -21,7 +21,6 @@ entity Control_Unit is
         -- Dados de controle
         destino_jump : out unsigned (6 downto 0);
         reg_data_write : out unsigned (15 downto 0); -- Dado a ser escrito no registrador
-        reg_write : out unsigned (2 downto 0);
         reg_read : out unsigned (2 downto 0); 
         ALU_operation : out unsigned (2 downto 0)
     );
@@ -70,8 +69,6 @@ architecture Control_Unit_arch of Control_Unit is
     signal reg_read_add : unsigned (2 downto 0);
     signal reg_read_sub : unsigned (2 downto 0);
     signal reg_read_comp : unsigned (2 downto 0);
-    signal reg_write_ld : unsigned (2 downto 0);
-    signal reg_write_mov : unsigned (2 downto 0);
     signal reg_data_write_ld : unsigned (15 downto 0);
     signal reg_data_write_mov : unsigned (15 downto 0);
     signal ALU_operation_add : unsigned (2 downto 0);
@@ -102,8 +99,7 @@ architecture Control_Unit_arch of Control_Unit is
         destino_jump <= jump_adress when state_s = "10" and opcode = JUMP_OP else (others => '0'); -- Define o destino do salto 
 
         -- Load [Carregar um valor imediato no registrador indicado]
-        reg_write_enable_ld <= '1' when state_s = "10" and opcode = LD_OP else '0'; 
-        reg_write_ld <= reg when state_s = "10" and opcode = LD_OP else (others => '0'); 
+        reg_write_enable_ld <= '1' when state_s = "10" and opcode = LD_OP else '0';
         reg_data_write_ld <= (15 downto 10 => ld_constant(9)) & ld_constant when state_s = "10" and opcode = LD_OP else (others => '0'); -- Extensão de sinal: replica o bit 9 (bit de sinal) para formar 16 bits
 
         -- Mov Acumulator
@@ -113,7 +109,6 @@ architecture Control_Unit_arch of Control_Unit is
 
         -- Mov Register
         reg_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0';
-        reg_write_mov <= reg when state_s = "10" and opcode = MOV_REG_OP else (others => '0');
         reg_data_write_mov <= accumulator_out when state_s = "10" and opcode = MOV_REG_OP else (others => '0'); -- Escreve o valor do acumulador no registrador
 
         -- ADD
@@ -138,7 +133,6 @@ architecture Control_Unit_arch of Control_Unit is
         reg_write_enable <= reg_write_enable_ld or reg_write_enable_mov;
         accumulator_write_enable <= accumulator_write_enable_mov or accumulator_write_enable_add or accumulator_write_enable_sub;
         reg_read <= reg_read_mov or reg_read_add or reg_read_sub or reg_read_comp;
-        reg_write <= reg_write_ld or reg_write_mov;
         reg_data_write <= reg_data_write_ld or reg_data_write_mov;
         ALU_operation <= ALU_operation_add or ALU_operation_sub or ALU_operation_comp;
 
