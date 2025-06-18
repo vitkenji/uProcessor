@@ -39,8 +39,8 @@ architecture Main_arch of Main is
             clk : in std_logic;
             rst : in std_logic;
             write_enable : in std_logic;
-            data_in : in unsigned (6 downto 0);
-            data_out : out unsigned (6 downto 0)
+            pc_in : in unsigned (6 downto 0);
+            pc_out : out unsigned (6 downto 0)
         );
     end component;
 

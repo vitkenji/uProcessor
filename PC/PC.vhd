@@ -11,8 +11,8 @@ entity PC is
         clk : in std_logic;
         rst : in std_logic;
         write_enable : in std_logic;
-        data_in : in unsigned (6 downto 0);
-        data_out : out unsigned (6 downto 0)
+        pc_in : in unsigned (6 downto 0);
+        pc_out : out unsigned (6 downto 0)
     );
 end entity;
 
@@ -26,11 +26,11 @@ begin
             data <= "0000000";
         elsif write_enable = '1' then
             if (rising_edge(clk)) then
-                data <= data_in;
+                data <= pc_in;
             end if;
         end if;
     end process;
 
-    data_out <= data;
+    pc_out <= data;
         
 end architecture;
