@@ -5,7 +5,6 @@ use ieee.numeric_std.all;
 entity Control_Unit is
     port(
         instruction : in unsigned (16 downto 0); -- Saída da ROM
-        accumulator_out : in unsigned (15 downto 0); -- Saída do acumulador
 
         clk : in std_logic;
         rst : in std_logic;

@@ -54,7 +54,6 @@ architecture Main_arch of Main is
     component Control_Unit
         port(
             instruction : in unsigned (16 downto 0);
-            accumulator_out : in unsigned (15 downto 0);
             clk : in std_logic;
             rst : in std_logic;
             
@@ -129,7 +128,7 @@ architecture Main_arch of Main is
     signal ALU_operation : unsigned (2 downto 0);
     signal reg_data_write_selector : std_logic;
 
-    signal input_0_concatenated : unsigned (15 downto 0);
+    signal input_0_c : unsigned (15 downto 0);
 
     -- Flags da ALU
     signal carry, sinal, zero : std_logic;
@@ -149,11 +148,11 @@ architecture Main_arch of Main is
             output => mux_acc_out
         );
 
-        input_0_concatenated <= (15 downto 10 => ir_out(9)) & ir_out(9 downto 0);
+        input_0_c <= (15 downto 10 => ir_out(9)) & ir_out(9 downto 0);
 
         uut_MUX_reg_data_write : MUX_2x1_16bits port map (
             selector => reg_data_write_selector,
-            input_0 => input_0_concatenated,
+            input_0 => input_0_c,
             input_1 => accumulator_out,
             output => mux_reg_data_write_out
         );
@@ -181,7 +180,6 @@ architecture Main_arch of Main is
             clk => clk,
             rst => rst,
             instruction => ir_out,  -- Usando instrução do IR, não diretamente da ROM
-            accumulator_out => accumulator_out,
             jump_enable => jump_enable,
             mov_enable_accumulator => mov_enable_accumulator,
             pc_write_enable => pc_write_enable,
