@@ -68,7 +68,6 @@ architecture Main_arch of Main is
             
             -- Dados de controle
             reg_data_write : out unsigned (15 downto 0);
-            reg_read : out unsigned (2 downto 0);
             ALU_operation : out unsigned (2 downto 0)
         );
     end component;
@@ -128,7 +127,6 @@ architecture Main_arch of Main is
     signal reg_write_enable : std_logic;
     signal reg_data_write : unsigned (15 downto 0);
     signal reg_write : unsigned (2 downto 0);
-    signal reg_read : unsigned (2 downto 0);
     signal ALU_operation : unsigned (2 downto 0);
 
     -- Flags da ALU
@@ -180,7 +178,6 @@ architecture Main_arch of Main is
             accumulator_write_enable => accumulator_write_enable,
             reg_write_enable => reg_write_enable,
             reg_data_write => reg_data_write,
-            reg_read => reg_read,
             ALU_operation => ALU_operation
         );
 
@@ -213,7 +210,7 @@ architecture Main_arch of Main is
         uut_bancoReg : bancoReg port map (
             clk => clk,
             rst => rst,
-            reg_read => reg_read,  -- Endereço vem da Control_Unit
+            reg_read => ir_out(12 downto 10),
             data_out => bank_register_out,
             write_enable => reg_write_enable,
             reg_write => ir_out(12 downto 10),

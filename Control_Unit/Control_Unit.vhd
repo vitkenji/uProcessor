@@ -20,7 +20,6 @@ entity Control_Unit is
 
         -- Dados de controle
         reg_data_write : out unsigned (15 downto 0); -- Dado a ser escrito no registrador
-        reg_read : out unsigned (2 downto 0); 
         ALU_operation : out unsigned (2 downto 0)
     );
 end entity;
@@ -64,10 +63,6 @@ architecture Control_Unit_arch of Control_Unit is
     signal accumulator_write_enable_mov : std_logic;
     signal accumulator_write_enable_add : std_logic;
     signal accumulator_write_enable_sub : std_logic;
-    signal reg_read_mov : unsigned (2 downto 0);
-    signal reg_read_add : unsigned (2 downto 0);
-    signal reg_read_sub : unsigned (2 downto 0);
-    signal reg_read_comp : unsigned (2 downto 0);
     signal reg_data_write_ld : unsigned (15 downto 0);
     signal reg_data_write_mov : unsigned (15 downto 0);
     signal ALU_operation_add : unsigned (2 downto 0);
@@ -101,8 +96,7 @@ architecture Control_Unit_arch of Control_Unit is
         reg_data_write_ld <= (15 downto 10 => ld_constant(9)) & ld_constant when state_s = "10" and opcode = LD_OP else (others => '0'); -- Extensão de sinal: replica o bit 9 (bit de sinal) para formar 16 bits
 
         -- Mov Acumulator
-        accumulator_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_ACC_OP else '0'; 
-        reg_read_mov <= reg when state_s = "10" and opcode = MOV_ACC_OP else (others => '0'); 
+        accumulator_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_ACC_OP else '0';
         mov_enable_accumulator <= '1' when state_s = "10" and opcode = MOV_ACC_OP else '0'; -- Habilita o MOV no acumulador [O valor do acumulador será o da saída do banco de registradores]
 
         -- Mov Register
@@ -110,19 +104,16 @@ architecture Control_Unit_arch of Control_Unit is
         reg_data_write_mov <= accumulator_out when state_s = "10" and opcode = MOV_REG_OP else (others => '0'); -- Escreve o valor do acumulador no registrador
 
         -- ADD
-        reg_read_add <= reg when state_s = "10" and opcode = ADD_OP else (others => '0'); -- Leitura do registrador para a operação de ADD
         ALU_operation_add <= ALU_ADD when state_s = "10" and opcode = ADD_OP else (others => '0'); -- Define a operação de ADD na ALU
         accumulator_write_enable_add <= '1' when state_s = "10" and opcode = ADD_OP else '0'; -- Habilita a escrita no acumulador após a operação de ADD
 
         -- SUB
-        reg_read_sub <= reg when state_s = "10" and opcode = SUB_OP else (others => '0'); -- Leitura do registrador para a operação de SUB
         ALU_operation_sub <= ALU_SUB when state_s = "10" and opcode = SUB_OP else (others => '0'); -- Define a operação de SUB na ALU
         accumulator_write_enable_sub <= '1' when state_s = "10" and opcode = SUB_OP else '0'; -- Habilita a escrita no acumulador após a operação de SUB
 
         -- COMPARAÇÃO
         -- O objetivo da CMPR é comparar dois valores, alterando apenas as flags, sem modificar o valor de nenhum registrador.
         -- a ULA realiza uma subtração entre os operandos, mas não armazena o resultado em lugar nenhum. O resultado serve apenas para atualizar as flags (Zero, Sinal, Carry, Overflow)
-        reg_read_comp <= reg when state_s = "10" and opcode = COMP_OP else (others => '0'); 
         ALU_operation_comp <= ALU_CMPR when state_s = "10" and opcode = COMP_OP else (others => '0'); -- Define a operação de comparação na ALU
 
         pc_write_enable <= '1' when state_s = "10" else '0'; -- Habilita a escrita no PC para a próxima instrução
@@ -130,7 +121,6 @@ architecture Control_Unit_arch of Control_Unit is
         -- COMBINAÇÃO DOS SINAIS AUXILIARES
         reg_write_enable <= reg_write_enable_ld or reg_write_enable_mov;
         accumulator_write_enable <= accumulator_write_enable_mov or accumulator_write_enable_add or accumulator_write_enable_sub;
-        reg_read <= reg_read_mov or reg_read_add or reg_read_sub or reg_read_comp;
         reg_data_write <= reg_data_write_ld or reg_data_write_mov;
         ALU_operation <= ALU_operation_add or ALU_operation_sub or ALU_operation_comp;
 
