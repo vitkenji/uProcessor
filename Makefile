@@ -1,8 +1,8 @@
 # Fontes
 SRC_ALU=ALU/ALU.vhd
 SRC_REGS=Registers/reg16bits.vhd Registers/bancoReg.vhd Registers/Accumulator.vhd Registers/Instruction_Register.vhd
-SRC_MAIN=Main/main.vhd
-SRC_TB=Main/main_tb.vhd
+SRC_MAIN=Main/Main.vhd
+SRC_TB=Main/Main_tb.vhd
 SRC_ROM=ROM/ROM.vhd
 SRC_PC=PC/PC.vhd
 SRC_ADDER=PC/Adder.vhd
