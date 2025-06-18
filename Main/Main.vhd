@@ -67,7 +67,6 @@ architecture Main_arch of Main is
             reg_write_enable : out std_logic;
             
             -- Dados de controle
-            destino_jump : out unsigned (6 downto 0);
             reg_data_write : out unsigned (15 downto 0);
             reg_read : out unsigned (2 downto 0);
             ALU_operation : out unsigned (2 downto 0)
@@ -127,7 +126,6 @@ architecture Main_arch of Main is
     signal ir_write_enable : std_logic;
     signal accumulator_write_enable : std_logic;
     signal reg_write_enable : std_logic;
-    signal destino_jump : unsigned (6 downto 0);
     signal reg_data_write : unsigned (15 downto 0);
     signal reg_write : unsigned (2 downto 0);
     signal reg_read : unsigned (2 downto 0);
@@ -140,7 +138,7 @@ architecture Main_arch of Main is
         uut_MUX_jump : MUX_2x1_7bits port map (
             selector => jump_enable,
             input_0 => adder_out,
-            input_1 => destino_jump,  -- Usando destino_jump da Control_Unit
+            input_1 => ir_out(12 downto 6),
             output => mux_jump_out
         );
 
@@ -181,7 +179,6 @@ architecture Main_arch of Main is
             ir_write_enable => ir_write_enable,
             accumulator_write_enable => accumulator_write_enable,
             reg_write_enable => reg_write_enable,
-            destino_jump => destino_jump,
             reg_data_write => reg_data_write,
             reg_read => reg_read,
             ALU_operation => ALU_operation

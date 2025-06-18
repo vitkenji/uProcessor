@@ -19,7 +19,6 @@ entity Control_Unit is
         reg_write_enable : out std_logic;
 
         -- Dados de controle
-        destino_jump : out unsigned (6 downto 0);
         reg_data_write : out unsigned (15 downto 0); -- Dado a ser escrito no registrador
         reg_read : out unsigned (2 downto 0); 
         ALU_operation : out unsigned (2 downto 0)
@@ -95,8 +94,7 @@ architecture Control_Unit_arch of Control_Unit is
         -- [Execute] Executa as instruções
 
         -- Jump
-        jump_enable <= '1' when state_s = "10" and opcode = JUMP_OP else '0'; 
-        destino_jump <= jump_adress when state_s = "10" and opcode = JUMP_OP else (others => '0'); -- Define o destino do salto 
+        jump_enable <= '1' when state_s = "10" and opcode = JUMP_OP else '0';
 
         -- Load [Carregar um valor imediato no registrador indicado]
         reg_write_enable_ld <= '1' when state_s = "10" and opcode = LD_OP else '0';
