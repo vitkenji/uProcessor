@@ -17,9 +17,9 @@ entity Control_Unit is
         ir_write_enable : out std_logic;
         accumulator_write_enable : out std_logic;
         reg_write_enable : out std_logic;
+        reg_data_write_selector : out std_logic;
 
         -- Dados de controle
-        reg_data_write : out unsigned (15 downto 0); -- Dado a ser escrito no registrador
         ALU_operation : out unsigned (2 downto 0)
     );
 end entity;
@@ -63,8 +63,6 @@ architecture Control_Unit_arch of Control_Unit is
     signal accumulator_write_enable_mov : std_logic;
     signal accumulator_write_enable_add : std_logic;
     signal accumulator_write_enable_sub : std_logic;
-    signal reg_data_write_ld : unsigned (15 downto 0);
-    signal reg_data_write_mov : unsigned (15 downto 0);
     signal ALU_operation_add : unsigned (2 downto 0);
     signal ALU_operation_sub : unsigned (2 downto 0);
     signal ALU_operation_comp : unsigned (2 downto 0);
@@ -93,16 +91,14 @@ architecture Control_Unit_arch of Control_Unit is
 
         -- Load [Carregar um valor imediato no registrador indicado]
         reg_write_enable_ld <= '1' when state_s = "10" and opcode = LD_OP else '0';
-        reg_data_write_ld <= (15 downto 10 => ld_constant(9)) & ld_constant when state_s = "10" and opcode = LD_OP else (others => '0'); -- Extensão de sinal: replica o bit 9 (bit de sinal) para formar 16 bits
-
+     
         -- Mov Acumulator
         accumulator_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_ACC_OP else '0';
         mov_enable_accumulator <= '1' when state_s = "10" and opcode = MOV_ACC_OP else '0'; -- Habilita o MOV no acumulador [O valor do acumulador será o da saída do banco de registradores]
 
         -- Mov Register
         reg_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0';
-        reg_data_write_mov <= accumulator_out when state_s = "10" and opcode = MOV_REG_OP else (others => '0'); -- Escreve o valor do acumulador no registrador
-
+   
         -- ADD
         ALU_operation_add <= ALU_ADD when state_s = "10" and opcode = ADD_OP else (others => '0'); -- Define a operação de ADD na ALU
         accumulator_write_enable_add <= '1' when state_s = "10" and opcode = ADD_OP else '0'; -- Habilita a escrita no acumulador após a operação de ADD
@@ -118,10 +114,11 @@ architecture Control_Unit_arch of Control_Unit is
 
         pc_write_enable <= '1' when state_s = "10" else '0'; -- Habilita a escrita no PC para a próxima instrução
 
+        reg_data_write_selector <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0'; 
+
         -- COMBINAÇÃO DOS SINAIS AUXILIARES
         reg_write_enable <= reg_write_enable_ld or reg_write_enable_mov;
         accumulator_write_enable <= accumulator_write_enable_mov or accumulator_write_enable_add or accumulator_write_enable_sub;
-        reg_data_write <= reg_data_write_ld or reg_data_write_mov;
         ALU_operation <= ALU_operation_add or ALU_operation_sub or ALU_operation_comp;
 
 end architecture;

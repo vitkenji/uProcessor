@@ -65,9 +65,9 @@ architecture Main_arch of Main is
             ir_write_enable : out std_logic;
             accumulator_write_enable : out std_logic;
             reg_write_enable : out std_logic;
+            reg_data_write_selector : out std_logic;
             
             -- Dados de controle
-            reg_data_write : out unsigned (15 downto 0);
             ALU_operation : out unsigned (2 downto 0)
         );
     end component;
@@ -117,6 +117,7 @@ architecture Main_arch of Main is
     signal pc_out, adder_out, mux_jump_out: unsigned (6 downto 0);
     signal rom_out, ir_out: unsigned (16 downto 0);
     signal accumulator_out, alu_out, bank_register_out, mux_acc_out : unsigned (15 downto 0);
+    signal mux_reg_data_write_out : unsigned (15 downto 0);
 
     -- Sinais de controle da Control_Unit
     signal jump_enable : std_logic;
@@ -125,9 +126,10 @@ architecture Main_arch of Main is
     signal ir_write_enable : std_logic;
     signal accumulator_write_enable : std_logic;
     signal reg_write_enable : std_logic;
-    signal reg_data_write : unsigned (15 downto 0);
-    signal reg_write : unsigned (2 downto 0);
     signal ALU_operation : unsigned (2 downto 0);
+    signal reg_data_write_selector : std_logic;
+
+    signal input_0_concatenated : unsigned (15 downto 0);
 
     -- Flags da ALU
     signal carry, sinal, zero : std_logic;
@@ -145,6 +147,15 @@ architecture Main_arch of Main is
             input_0 => alu_out,  -- Para ADD/SUB vem da ALU
             input_1 => bank_register_out,  -- Para MOV vem do banco de registradores
             output => mux_acc_out
+        );
+
+        input_0_concatenated <= (15 downto 10 => ir_out(9)) & ir_out(9 downto 0);
+
+        uut_MUX_reg_data_write : MUX_2x1_16bits port map (
+            selector => reg_data_write_selector,
+            input_0 => input_0_concatenated,
+            input_1 => accumulator_out,
+            output => mux_reg_data_write_out
         );
 
         uut_PC : PC port map (
@@ -177,7 +188,7 @@ architecture Main_arch of Main is
             ir_write_enable => ir_write_enable,
             accumulator_write_enable => accumulator_write_enable,
             reg_write_enable => reg_write_enable,
-            reg_data_write => reg_data_write,
+            reg_data_write_selector => reg_data_write_selector,
             ALU_operation => ALU_operation
         );
 
@@ -214,7 +225,7 @@ architecture Main_arch of Main is
             data_out => bank_register_out,
             write_enable => reg_write_enable,
             reg_write => ir_out(12 downto 10),
-            data_write => reg_data_write  -- Dados vem da Control_Unit
+            data_write => mux_reg_data_write_out
         );
 
 end architecture;
