@@ -156,8 +156,8 @@ architecture Main_arch of Main is
             clk => clk,
             rst => rst,
             write_enable => pc_write_enable,
-            data_in => mux_jump_out,
-            data_out => pc_out
+            pc_in => mux_jump_out,
+            pc_out => pc_out
         );
         
         uut_Adder : Adder port map (
