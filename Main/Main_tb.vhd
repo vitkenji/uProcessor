@@ -25,7 +25,7 @@ begin
     reset_global : process
     begin
         reset <= '1';
-        wait for period_time * 2;
+        wait for period_time * 3;
         reset <= '0';
         wait;
     end process;

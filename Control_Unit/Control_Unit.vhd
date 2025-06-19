@@ -89,7 +89,7 @@ architecture Control_Unit_arch of Control_Unit is
         -- [Execute] Executa as instruções
 
         -- Jump
-        jump_enable <= '1' when state_s = "10" and opcode = JUMP_OP else '0';
+        jump_enable <= '1' when state_s = "01" and opcode = JUMP_OP else '0';
 
         -- Load [Carregar um valor imediato no registrador indicado]
         reg_write_enable_ld <= '1' when state_s = "10" and opcode = LD_OP else '0';
@@ -116,7 +116,7 @@ architecture Control_Unit_arch of Control_Unit is
         -- a ULA realiza uma subtração entre os operandos, mas não armazena o resultado em lugar nenhum. O resultado serve apenas para atualizar as flags (Zero, Sinal, Carry, Overflow)
         ALU_operation_comp <= ALU_CMPR when state_s = "10" and opcode = COMP_OP else (others => '0'); -- Define a operação de comparação na ALU
 
-        pc_write_enable <= '1' when state_s = "10" else '0'; -- Habilita a escrita no PC para a próxima instrução
+        pc_write_enable <= '1' when state_s = "01" else '0'; -- Habilita a escrita no PC para a próxima instrução
 
         reg_data_write_selector <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0'; 
 
