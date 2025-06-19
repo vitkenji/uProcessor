@@ -144,10 +144,36 @@ Exemplo:
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## LAB 6
-
 Instrução: BLE
 
+[o] Opcode: 0111 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+[c] Const: 8 bits (9 - 2)
+
+oooo rrr cccccccc xx
+
+Limitações:
+
+Exemplo:
+    - BLE R1, 20(0111 001 00010100) 
+    - Opcode: 0111 (BLE)
+    - Reg: 001 (r1)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Instrução: BHS
+
+[o] Opcode: 0111 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+[c] Const: 8 bits (9 - 2)
+
+oooo rrr xxxxxxxxxx
+
+Limitações:
+
+Exemplo:
+    - BHS R1, 20(0111 001 00010100) 
+    - Opcode: 0111 (BLE)
+    - Reg: 001 (r1)
 
 Instrução: Saltos (Incondicional é absoluto e condicional é relativo)

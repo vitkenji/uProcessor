@@ -11,6 +11,7 @@ entity Control_Unit is
 
         -- Sinais de controle
         jump_enable : out std_logic;
+        branch_enable : out std_logic;
         mov_enable_accumulator : out std_logic; -- Habilita o MOV no acumulador
         pc_write_enable : out std_logic;
         ir_write_enable : out std_logic;
@@ -47,6 +48,8 @@ architecture Control_Unit_arch of Control_Unit is
     constant ADD_OP: unsigned (3 downto 0) := "0010"; -- Opcode para ADD
     constant SUB_OP: unsigned (3 downto 0) := "0011"; -- Opcode para SUB
     constant COMP_OP: unsigned (3 downto 0) := "0101"; -- Opcode para COMPARAÇÃO
+    constant BLE_OP : unsigned (3 downto 0) := "0111"; -- Opcode para BLE
+    constant BHS_OP : unsigned (3 downto 0) := "1000"; -- Opcode para BHS
 
     -- Decodificação de Instruções
     signal opcode : unsigned (3 downto 0);
@@ -106,6 +109,8 @@ architecture Control_Unit_arch of Control_Unit is
         ALU_operation_sub <= ALU_SUB when state_s = "10" and opcode = SUB_OP else (others => '0'); -- Define a operação de SUB na ALU
         accumulator_write_enable_sub <= '1' when state_s = "10" and opcode = SUB_OP else '0'; -- Habilita a escrita no acumulador após a operação de SUB
 
+        branch_enable <= '1' when state_s = "10" and (opcode = BLE_OP or opcode = BHS_OP) else '0';  
+        
         -- COMPARAÇÃO
         -- O objetivo da CMPR é comparar dois valores, alterando apenas as flags, sem modificar o valor de nenhum registrador.
         -- a ULA realiza uma subtração entre os operandos, mas não armazena o resultado em lugar nenhum. O resultado serve apenas para atualizar as flags (Zero, Sinal, Carry, Overflow)

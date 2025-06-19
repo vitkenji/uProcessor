@@ -6,6 +6,7 @@ SRC_TB=Main/Main_tb.vhd
 SRC_ROM=ROM/ROM.vhd
 SRC_PC=PC/PC.vhd
 SRC_ADDER=PC/Adder.vhd
+SRC_BRANCH_ADDER=PC/Branch_Adder.vhd
 SRC_MUX=MUX/MUX_2x1_7bits.vhd
 SRC_MUX_16=MUX/MUX_2x1_16bits.vhd
 SRC_STATE=State_Machine/State_Machine.vhd
@@ -28,16 +29,17 @@ all: run
 analyze:
 	ghdl -a $(SRC_ALU)
 	ghdl -a $(SRC_REGS)
-	ghdl -a $(SRC_MAIN)
 	ghdl -a $(SRC_TB)
 	ghdl -a $(SRC_ROM)
 	ghdl -a $(SRC_PC)
 	ghdl -a $(SRC_ADDER)
+	ghdl -a $(SRC_BRANCH_ADDER)
 	ghdl -a $(SRC_MUX)
 	ghdl -a $(SRC_MUX_16)
 	ghdl -a $(SRC_STATE)
 	ghdl -a $(SRC_CONTROL)
 	ghdl -a $(SRC_CONTROL_TB)
+	ghdl -a $(SRC_MAIN)
 
 # Compilação específica para Control_Unit
 analyze_control:
@@ -52,7 +54,6 @@ elaborate: analyze
 	ghdl -e bancoReg
 	ghdl -e Accumulator
 	ghdl -e Instruction_Register
-	ghdl -e main
 	ghdl -e ROM
 	ghdl -e Adder
 	ghdl -e MUX_2x1_7bits
@@ -61,6 +62,7 @@ elaborate: analyze
 	ghdl -e State_Machine
 	ghdl -e Control_Unit
 	ghdl -e $(TB_ENTITY)
+	ghdl -e main
 
 # Elaboração específica para Control_Unit
 elaborate_control: analyze_control

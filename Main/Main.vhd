@@ -49,7 +49,15 @@ architecture Main_arch of Main is
             data_in : in unsigned (6 downto 0);
             data_out : out unsigned (6 downto 0)
         );
-    end component;    
+    end component;
+    
+    component Branch_Adder
+        port (
+            delta : in unsigned (6 downto 0);
+            current_address : in unsigned (6 downto 0);
+            address_out : out unsigned (6 downto 0)
+        );
+    end component;
 
     component Control_Unit
         port(
@@ -59,6 +67,7 @@ architecture Main_arch of Main is
             
             -- Sinais de controle
             jump_enable : out std_logic;
+            branch_enable : out std_logic;
             mov_enable_accumulator : out std_logic;
             pc_write_enable : out std_logic;
             ir_write_enable : out std_logic;
@@ -113,13 +122,14 @@ architecture Main_arch of Main is
      end component;
 
     -- Sinais de interconexão
-    signal pc_out, adder_out, mux_jump_out: unsigned (6 downto 0);
+    signal pc_out, adder_out, branch_adder_out, mux_jump_out, mux_branch_out: unsigned (6 downto 0);
     signal rom_out, ir_out: unsigned (16 downto 0);
     signal accumulator_out, alu_out, bank_register_out, mux_acc_out : unsigned (15 downto 0);
     signal mux_reg_data_write_out : unsigned (15 downto 0);
 
     -- Sinais de controle da Control_Unit
     signal jump_enable : std_logic;
+    signal branch_enable : std_logic;
     signal mov_enable_accumulator : std_logic;
     signal pc_write_enable : std_logic;
     signal ir_write_enable : std_logic;
@@ -136,7 +146,7 @@ architecture Main_arch of Main is
     begin
         uut_MUX_jump : MUX_2x1_7bits port map (
             selector => jump_enable,
-            input_0 => adder_out,
+            input_0 => mux_branch_out,
             input_1 => ir_out(12 downto 6),
             output => mux_jump_out
         );
@@ -156,7 +166,14 @@ architecture Main_arch of Main is
             input_1 => accumulator_out,
             output => mux_reg_data_write_out
         );
-
+        
+        uut_MUX_branch : MUX_2x1_7bits port map (
+            selector => branch_enable,
+            input_0 => adder_out,
+            input_1 => branch_adder_out, 
+            output => mux_branch_out
+        );
+        
         uut_PC : PC port map (
             clk => clk,
             rst => rst,
@@ -170,6 +187,12 @@ architecture Main_arch of Main is
             data_out => adder_out
         );
 
+        uut_Branch_Adder : Branch_Adder port map (
+            delta => ir_out(9 downto 3),
+            current_address => pc_out,
+            address_out => branch_adder_out
+        );
+
         uut_ROM : ROM port map (
             clk => clk,
             address => pc_out,
@@ -181,6 +204,7 @@ architecture Main_arch of Main is
             rst => rst,
             instruction => ir_out,  -- Usando instrução do IR, não diretamente da ROM
             jump_enable => jump_enable,
+            branch_enable => branch_enable,
             mov_enable_accumulator => mov_enable_accumulator,
             pc_write_enable => pc_write_enable,
             ir_write_enable => ir_write_enable,

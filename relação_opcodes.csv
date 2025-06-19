@@ -6,3 +6,5 @@
 "0010","ADD","Soma registrador ao acumulador","reg_read=<reg>,ALU_operation=ADD,accumulator_write_enable=1,pc_write_enable=1"
 "0011","SUB","Subtrai registrador do acumulador","reg_read=<reg>,ALU_operation=SUB,accumulator_write_enable=1,pc_write_enable=1"
 "0101","COMP","Comparação (subtração sem escrita)","reg_read=<reg>,ALU_operation=CMPR,pc_write_enable=1"
+"0111","BLE", "Salto Relativo", ""
+"1000","BHS", "Salto Relativo", ""
