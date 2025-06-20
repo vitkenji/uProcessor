@@ -2,16 +2,19 @@
 
 ## Instructions
 
-| Mnemonic | Opcode | Format | Description
-| --       |--      |--      | --
-| ld       | 0001   |  R     | rn = Imm
-| add      | 0010   |  I     | A += rn
-| sub      | 0011   |  R     | A -= rn
-| mov  a   | 0100   |  R     | A = rn
-| comp     | 0101   |  R     | 
-| mov rn   | 0110   |  B     | rn = A
-| ble      | 0111   |  R     | 
-| bhs      | 1000   |  B     |
+| Mnemonic   | Opcode | Format | Description
+| --         |--      |--      | --
+| LD Rn,i    | 0001   |  I     | Rn = i
+| ADD Rn     | 0010   |  R     | A += Rn
+| SUB Rn     | 0011   |  R     | A -= Rn
+| MOV A,Rn   | 0100   |  R     | A = Rn
+| CMPR       | 0101   |  R     | 
+| MOV Rn,A   | 0110   |  B     | Rn = A
+| BLE Rn,i,b | 0111   |  B     | Rn <= i ? adr+b 
+| BHS Rn,i,b | 1000   |  B     | Rn >= i ? adr+b
+| SW         | 1001   |  B     | RAM[Rn]= A
+| LW         | 1010   |  B     | A =  RAM[Rn]
+| JUMP i     | 1111   |  J     | address = i
 
 ## Instruction formats
 
