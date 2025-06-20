@@ -10,7 +10,8 @@ entity ALU is
     port (
         input_0, input_1 : in unsigned (15 downto 0);
         operation_selector: in unsigned (2 downto 0);
-        carry, sinal, zero: out std_logic; 
+        carry, sinal, zero: out std_logic;
+        less_equal, higher_same : out std_logic;
         alu_result : out unsigned (15 downto 0)
     );
 end entity;
@@ -34,6 +35,10 @@ begin
 
     -- Flag Zero
     zero <= '1' when result_internal = "0000000000000000" else '0';
+
+    less_equal <= '1' when input_0 <= input_1 else '0';
+
+    higher_same <= '1' when input_0 >= input_1 else '0';
 
     -- Flag Sinal (bit mais significativo)
     sinal <= result_internal(15);
