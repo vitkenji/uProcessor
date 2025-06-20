@@ -10,15 +10,10 @@ entity Control_Unit is
         rst : in std_logic;
 
         -- Sinais de controle
-        jump_enable : out std_logic;
-        ble_enable, bhs_enable : out std_logic;
-        mov_enable_accumulator : out std_logic; -- Habilita o MOV no acumulador
-        pc_write_enable : out std_logic;
-        ir_write_enable : out std_logic;
-        accumulator_write_enable : out std_logic;
-        reg_write_enable : out std_logic;
-        reg_data_write_selector : out std_logic;
-        branch_alu_selector : out std_logic;
+        jump_enable, ble_enable, bhs_enable, mov_enable_accumulator,
+        pc_write_enable, ir_write_enable, accumulator_write_enable, reg_write_enable: out std_logic;
+
+        reg_data_write_selector, branch_alu_selector : out std_logic;
 
         -- Dados de controle
         ALU_operation : out unsigned (2 downto 0)
@@ -61,14 +56,10 @@ architecture Control_Unit_arch of Control_Unit is
     signal state_s : unsigned (1 downto 0);
 
     -- VARIÁVEIS AUXILIARES para evitar múltiplas atribuições
-    signal reg_write_enable_ld : std_logic;
-    signal reg_write_enable_mov : std_logic;
-    signal accumulator_write_enable_mov : std_logic;
-    signal accumulator_write_enable_add : std_logic;
-    signal accumulator_write_enable_sub : std_logic;
-    signal ALU_operation_add : unsigned (2 downto 0);
-    signal ALU_operation_sub : unsigned (2 downto 0);
-    signal ALU_operation_comp : unsigned (2 downto 0);
+    signal reg_write_enable_ld, reg_write_enable_mov, accumulator_write_enable_mov, 
+        accumulator_write_enable_add, accumulator_write_enable_sub: std_logic;
+
+    signal ALU_operation_add, ALU_operation_sub, ALU_operation_comp: unsigned (2 downto 0);
 
     begin
 

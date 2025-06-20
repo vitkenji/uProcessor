@@ -66,15 +66,10 @@ architecture Main_arch of Main is
             rst : in std_logic;
             
             -- Sinais de controle
-            jump_enable : out std_logic;
-            ble_enable, bhs_enable : out std_logic;
-            mov_enable_accumulator : out std_logic;
-            pc_write_enable : out std_logic;
-            ir_write_enable : out std_logic;
-            accumulator_write_enable : out std_logic;
-            reg_write_enable : out std_logic;
-            reg_data_write_selector : out std_logic;
-            branch_alu_selector : out std_logic;
+            jump_enable, ble_enable, bhs_enable, mov_enable_accumulator,
+            pc_write_enable, ir_write_enable, accumulator_write_enable, reg_write_enable: out std_logic;
+
+            reg_data_write_selector, branch_alu_selector : out std_logic;
             
             -- Dados de controle
             ALU_operation : out unsigned (2 downto 0)
@@ -126,32 +121,19 @@ architecture Main_arch of Main is
     -- Sinais de interconexão
     signal pc_out, adder_out, branch_adder_out, mux_jump_out, mux_branch_out: unsigned (6 downto 0);
     signal rom_out, ir_out: unsigned (16 downto 0);
-    signal accumulator_out, alu_out, bank_register_out, mux_acc_out : unsigned (15 downto 0);
-    signal mux_reg_data_write_out : unsigned (15 downto 0);
-    signal mux_alu_input1_out : unsigned (15 downto 0);
+    signal accumulator_out, alu_out, bank_register_out, mux_acc_out, mux_reg_data_write_out, mux_alu_input1_out : unsigned (15 downto 0);
 
     -- Sinais de controle da Control_Unit
-    signal jump_enable : std_logic;
-    signal ble_enable : std_logic;
-    signal bhs_enable : std_logic;
-    signal mov_enable_accumulator : std_logic;
-    signal pc_write_enable : std_logic;
-    signal ir_write_enable : std_logic;
-    signal accumulator_write_enable : std_logic;
-    signal reg_write_enable : std_logic;
+    signal jump_enable, ble_enable, bhs_enable, mov_enable_accumulator, 
+           pc_write_enable, ir_write_enable, accumulator_write_enable, 
+           reg_write_enable, reg_data_write_selector: std_logic;
+    
     signal ALU_operation : unsigned (2 downto 0);
-    signal reg_data_write_selector : std_logic;
-
-    signal branch_enable : std_logic;
-    signal less_equal, higher_same : std_logic;
-    signal branch_alu_selector : std_logic;
-
-    signal input_0_c : unsigned (15 downto 0);
-
-    signal branch_input1 : unsigned (15 downto 0);
+    signal branch_enable, branch_alu_selector  : std_logic;
+    signal input_0_c, branch_input1  : unsigned (15 downto 0);
 
     -- Flags da ALU
-    signal carry, sinal, zero : std_logic;
+    signal carry, sinal, zero, less_equal, higher_same  : std_logic;
 
     begin
         uut_MUX_jump : MUX_2x1_7bits port map (
