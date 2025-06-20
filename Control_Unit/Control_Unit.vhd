@@ -10,10 +10,13 @@ entity Control_Unit is
         rst : in std_logic;
 
         -- Sinais de controle
-        jump_enable, ble_enable, bhs_enable, mov_enable_accumulator,
-        pc_write_enable, ir_write_enable, accumulator_write_enable, reg_write_enable: out std_logic;
+        jump_enable, ble_enable, bhs_enable,
+        pc_write_enable, ir_write_enable, accumulator_write_enable,
+        reg_write_enable, ram_write_enable: out std_logic;
 
         reg_data_write_selector, branch_alu_selector : out std_logic;
+
+        accumulator_selector : out unsigned (1 downto 0);
 
         -- Dados de controle
         ALU_operation : out unsigned (2 downto 0)
@@ -46,6 +49,8 @@ architecture Control_Unit_arch of Control_Unit is
     constant COMP_OP: unsigned (3 downto 0) := "0101"; -- Opcode para COMPARAÇÃO
     constant BLE_OP : unsigned (3 downto 0) := "0111"; -- Opcode para BLE
     constant BHS_OP : unsigned (3 downto 0) := "1000"; -- Opcode para BHS
+    constant SW_OP : unsigned (3 downto 0) := "1001"; -- Opcode para SW
+    constant LW_OP : unsigned (3 downto 0) := "1010"; -- Opcode para LW
 
     -- Decodificação de Instruções
     signal opcode : unsigned (3 downto 0);
@@ -57,7 +62,8 @@ architecture Control_Unit_arch of Control_Unit is
 
     -- VARIÁVEIS AUXILIARES para evitar múltiplas atribuições
     signal reg_write_enable_ld, reg_write_enable_mov, accumulator_write_enable_mov, 
-        accumulator_write_enable_add, accumulator_write_enable_sub: std_logic;
+        accumulator_write_enable_add, accumulator_write_enable_sub, 
+        accumulator_write_enable_lw : std_logic;
 
     signal ALU_operation_add, ALU_operation_sub, ALU_operation_comp: unsigned (2 downto 0);
 
@@ -88,8 +94,8 @@ architecture Control_Unit_arch of Control_Unit is
      
         -- Mov Acumulator
         accumulator_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_ACC_OP else '0';
-        mov_enable_accumulator <= '1' when state_s = "10" and opcode = MOV_ACC_OP else '0'; -- Habilita o MOV no acumulador [O valor do acumulador será o da saída do banco de registradores]
-
+        accumulator_selector <= "01" when state_s = "10" and opcode = MOV_ACC_OP else -- Habilita o MOV no acumulador [O valor do acumulador será o da saída do banco de registradores]
+                                  "10" when state_s = "10" and opcode = LW_OP else "00";
         -- Mov Register
         reg_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0';
    
@@ -101,6 +107,10 @@ architecture Control_Unit_arch of Control_Unit is
         ALU_operation_sub <= ALU_SUB when state_s = "10" and opcode = SUB_OP else (others => '0'); -- Define a operação de SUB na ALU
         accumulator_write_enable_sub <= '1' when state_s = "10" and opcode = SUB_OP else '0'; -- Habilita a escrita no acumulador após a operação de SUB
 
+        --LW
+        accumulator_write_enable_lw <= '1' when state_s = "10" and opcode = LW_OP else '0';
+
+        -- BRANCH
         ble_enable <= '1' when state_s = "01" and opcode = BLE_OP else '0';
         bhs_enable <= '1' when state_s = "01" and opcode = BHS_OP else '0';  
         branch_alu_selector <= '1' when state_s = "01" and (opcode = BLE_OP or opcode = BHS_OP) else '0';
@@ -114,9 +124,11 @@ architecture Control_Unit_arch of Control_Unit is
 
         reg_data_write_selector <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0'; 
 
+        ram_write_enable <= '1' when state_s = "10" and opcode = SW_OP else '0';
+
         -- COMBINAÇÃO DOS SINAIS AUXILIARES
         reg_write_enable <= reg_write_enable_ld or reg_write_enable_mov;
-        accumulator_write_enable <= accumulator_write_enable_mov or accumulator_write_enable_add or accumulator_write_enable_sub;
+        accumulator_write_enable <= accumulator_write_enable_mov or accumulator_write_enable_add or accumulator_write_enable_sub or accumulator_write_enable_lw;
         ALU_operation <= ALU_operation_add or ALU_operation_sub or ALU_operation_comp;
 
 end architecture;

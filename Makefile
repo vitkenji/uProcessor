@@ -9,9 +9,9 @@ SRC_ADDER=PC/Adder.vhd
 SRC_BRANCH_ADDER=PC/Branch_Adder.vhd
 SRC_MUX=MUX/MUX_2x1_7bits.vhd
 SRC_MUX_16=MUX/MUX_2x1_16bits.vhd
+SRC_MUX_3x1_16=MUX/MUX_3x1_16bits.vhd
 SRC_STATE=State_Machine/State_Machine.vhd
-# SRC_PC_TOP=PC_top_level.vhd
-# SRC_PC_TB=PC_top_level_tb.vhd
+SRC_RAM=RAM/RAM.vhd
 SRC_CONTROL=Control_Unit/Control_Unit.vhd
 SRC_CONTROL_TB=Control_Unit/Control_Unit_tb.vhd
 
@@ -36,7 +36,9 @@ analyze:
 	ghdl -a $(SRC_BRANCH_ADDER)
 	ghdl -a $(SRC_MUX)
 	ghdl -a $(SRC_MUX_16)
+	ghdl -a $(SRC_MUX_3x1_16)
 	ghdl -a $(SRC_STATE)
+	ghdl -a $(SRC_RAM)
 	ghdl -a $(SRC_CONTROL)
 	ghdl -a $(SRC_CONTROL_TB)
 	ghdl -a $(SRC_MAIN)
@@ -58,8 +60,10 @@ elaborate: analyze
 	ghdl -e Adder
 	ghdl -e MUX_2x1_7bits
 	ghdl -e MUX_2x1_16bits
+	ghdl -e MUX_3x1_16bits
 	ghdl -e PC
 	ghdl -e State_Machine
+	ghdl -e RAM
 	ghdl -e Control_Unit
 	ghdl -e $(TB_ENTITY)
 	ghdl -e main

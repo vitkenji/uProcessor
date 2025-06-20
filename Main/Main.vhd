@@ -26,6 +26,14 @@ architecture Main_arch of Main is
         );
     end component;
 
+    component MUX_3x1_16bits
+        port (
+            selector : in unsigned (1 downto 0);
+            input_0, input_1, input_2 : in unsigned (15 downto 0);
+            output : out unsigned (15 downto 0) 
+        );
+    end component;
+
     component ROM
         port (
             clk : in std_logic;
@@ -66,11 +74,13 @@ architecture Main_arch of Main is
             rst : in std_logic;
             
             -- Sinais de controle
-            jump_enable, ble_enable, bhs_enable, mov_enable_accumulator,
-            pc_write_enable, ir_write_enable, accumulator_write_enable, reg_write_enable: out std_logic;
+            jump_enable, ble_enable, bhs_enable,
+            pc_write_enable, ir_write_enable, accumulator_write_enable, 
+            reg_write_enable, ram_write_enable : out std_logic;
 
             reg_data_write_selector, branch_alu_selector : out std_logic;
-            
+
+            accumulator_selector : out unsigned (1 downto 0);
             -- Dados de controle
             ALU_operation : out unsigned (2 downto 0)
         );
@@ -118,18 +128,30 @@ architecture Main_arch of Main is
         );
      end component;
 
+    component RAM
+        port (
+            clk : in std_logic;
+            address : in unsigned (15 downto 0);
+            write_enable : in std_logic;
+            ram_data_in : in unsigned (15 downto 0);
+            ram_data_out : out unsigned (15 downto 0) 
+        );
+    end component;
+
     -- Sinais de interconexão
     signal pc_out, adder_out, branch_adder_out, mux_jump_out, mux_branch_out: unsigned (6 downto 0);
     signal rom_out, ir_out: unsigned (16 downto 0);
-    signal accumulator_out, alu_out, bank_register_out, mux_acc_out, mux_reg_data_write_out, mux_alu_input1_out : unsigned (15 downto 0);
+    signal accumulator_out, alu_out, bank_register_out, mux_acc_out, mux_reg_data_write_out, 
+           mux_alu_input1_out, ram_data_out : unsigned (15 downto 0);
 
     -- Sinais de controle da Control_Unit
-    signal jump_enable, ble_enable, bhs_enable, mov_enable_accumulator, 
+    signal jump_enable, ble_enable, bhs_enable,
            pc_write_enable, ir_write_enable, accumulator_write_enable, 
-           reg_write_enable, reg_data_write_selector: std_logic;
+           reg_write_enable, reg_data_write_selector, ram_write_enable : std_logic;
     
+    signal accumulator_selector : unsigned (1 downto 0);
     signal ALU_operation : unsigned (2 downto 0);
-    signal branch_enable, branch_alu_selector  : std_logic;
+    signal branch_enable, branch_alu_selector : std_logic;
     signal input_0_c, branch_input1  : unsigned (15 downto 0);
 
     -- Flags da ALU
@@ -143,10 +165,11 @@ architecture Main_arch of Main is
             output => mux_jump_out
         );
 
-        uut_MUX_acc : MUX_2x1_16bits port map (
-            selector => mov_enable_accumulator,
+        uut_MUX_acc : MUX_3x1_16bits port map (
+            selector => accumulator_selector,
             input_0 => alu_out,  -- Para ADD/SUB vem da ALU
             input_1 => bank_register_out,  -- Para MOV vem do banco de registradores
+            input_2 => ram_data_out,
             output => mux_acc_out
         );
 
@@ -210,13 +233,14 @@ architecture Main_arch of Main is
             jump_enable => jump_enable,
             ble_enable => ble_enable,
             bhs_enable => bhs_enable,
-            mov_enable_accumulator => mov_enable_accumulator,
+            accumulator_selector => accumulator_selector,
             pc_write_enable => pc_write_enable,
             ir_write_enable => ir_write_enable,
             accumulator_write_enable => accumulator_write_enable,
             reg_write_enable => reg_write_enable,
             reg_data_write_selector => reg_data_write_selector,
             branch_alu_selector => branch_alu_selector,
+            ram_write_enable => ram_write_enable,
             ALU_operation => ALU_operation
         );
 
@@ -256,6 +280,14 @@ architecture Main_arch of Main is
             write_enable => reg_write_enable,
             reg_write => ir_out(12 downto 10),
             data_write => mux_reg_data_write_out
+        );
+
+       uut_RAM : RAM port map (
+            clk => clk,
+            address => bank_register_out,
+            write_enable => ram_write_enable,
+            ram_data_in => accumulator_out,
+            ram_data_out => ram_data_out 
         );
 
 end architecture;
