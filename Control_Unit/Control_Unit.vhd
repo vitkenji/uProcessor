@@ -11,7 +11,7 @@ entity Control_Unit is
 
         -- Sinais de controle
         jump_enable : out std_logic;
-        branch_enable : out std_logic;
+        ble_enable, bhs_enable : out std_logic;
         mov_enable_accumulator : out std_logic; -- Habilita o MOV no acumulador
         pc_write_enable : out std_logic;
         ir_write_enable : out std_logic;
@@ -110,8 +110,9 @@ architecture Control_Unit_arch of Control_Unit is
         ALU_operation_sub <= ALU_SUB when state_s = "10" and opcode = SUB_OP else (others => '0'); -- Define a operação de SUB na ALU
         accumulator_write_enable_sub <= '1' when state_s = "10" and opcode = SUB_OP else '0'; -- Habilita a escrita no acumulador após a operação de SUB
 
-        branch_enable <= '1' when state_s = "01" and (opcode = BLE_OP or opcode = BHS_OP) else '0';  
-        branch_alu_selector <= '1' when state_s = "10" and opcode = BLE_OP else '0';
+        ble_enable <= '1' when state_s = "01" and opcode = BLE_OP else '0';
+        bhs_enable <= '1' when state_s = "01" and opcode = BHS_OP else '0';  
+        branch_alu_selector <= '1' when state_s = "01" and (opcode = BLE_OP or opcode = BHS_OP) else '0';
 
         -- COMPARAÇÃO
         -- O objetivo da CMPR é comparar dois valores, alterando apenas as flags, sem modificar o valor de nenhum registrador.

@@ -1,28 +1,31 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Thu Jun 19 23:47:47 2025
+[*] Fri Jun 20 13:44:02 2025
 [*]
 [dumpfile] "/home/vkzy/Desktop/uProcessor/main_tb.ghw"
-[dumpfile_mtime] "Thu Jun 19 23:47:20 2025"
-[dumpfile_size] 11631
+[dumpfile_mtime] "Fri Jun 20 13:42:58 2025"
+[dumpfile_size] 74761
 [savefile] "/home/vkzy/Desktop/uProcessor/main_tb_configGHW.gtkw"
 [timestart] 0
-[size] 1306 736
-[pos] 32767 32767
+[size] 1920 1048
+[pos] 34073 32767
 *-29.281954 3417000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.main_tb.
 [treeopen] top.main_tb.uut.
 [treeopen] top.main_tb.uut.uut_control_unit.
 [treeopen] top.main_tb.uut.uut_control_unit.uut_state_machine.
-[sst_width] 212
+[sst_width] 322
 [signals_width] 214
 [sst_expanded] 1
-[sst_vpaned_height] 292
-@28
+[sst_vpaned_height] 455
+@29
+[color] 1
 top.main_tb.clk
-@24
+@25
+[color] 1
 #{top.main_tb.uut.uut_control_unit.uut_state_machine.state[1:0]} top.main_tb.uut.uut_control_unit.uut_state_machine.state[1] top.main_tb.uut.uut_control_unit.uut_state_machine.state[0]
+@24
 #{top.main_tb.uut.uut_pc.pc_out[6:0]} top.main_tb.uut.uut_pc.pc_out[6] top.main_tb.uut.uut_pc.pc_out[5] top.main_tb.uut.uut_pc.pc_out[4] top.main_tb.uut.uut_pc.pc_out[3] top.main_tb.uut.uut_pc.pc_out[2] top.main_tb.uut.uut_pc.pc_out[1] top.main_tb.uut.uut_pc.pc_out[0]
 #{top.main_tb.uut.accumulator_out[15:0]} top.main_tb.uut.accumulator_out[15] top.main_tb.uut.accumulator_out[14] top.main_tb.uut.accumulator_out[13] top.main_tb.uut.accumulator_out[12] top.main_tb.uut.accumulator_out[11] top.main_tb.uut.accumulator_out[10] top.main_tb.uut.accumulator_out[9] top.main_tb.uut.accumulator_out[8] top.main_tb.uut.accumulator_out[7] top.main_tb.uut.accumulator_out[6] top.main_tb.uut.accumulator_out[5] top.main_tb.uut.accumulator_out[4] top.main_tb.uut.accumulator_out[3] top.main_tb.uut.accumulator_out[2] top.main_tb.uut.accumulator_out[1] top.main_tb.uut.accumulator_out[0]
 #{top.main_tb.uut.uut_bancoreg.data_out_r3[15:0]} top.main_tb.uut.uut_bancoreg.data_out_r3[15] top.main_tb.uut.uut_bancoreg.data_out_r3[14] top.main_tb.uut.uut_bancoreg.data_out_r3[13] top.main_tb.uut.uut_bancoreg.data_out_r3[12] top.main_tb.uut.uut_bancoreg.data_out_r3[11] top.main_tb.uut.uut_bancoreg.data_out_r3[10] top.main_tb.uut.uut_bancoreg.data_out_r3[9] top.main_tb.uut.uut_bancoreg.data_out_r3[8] top.main_tb.uut.uut_bancoreg.data_out_r3[7] top.main_tb.uut.uut_bancoreg.data_out_r3[6] top.main_tb.uut.uut_bancoreg.data_out_r3[5] top.main_tb.uut.uut_bancoreg.data_out_r3[4] top.main_tb.uut.uut_bancoreg.data_out_r3[3] top.main_tb.uut.uut_bancoreg.data_out_r3[2] top.main_tb.uut.uut_bancoreg.data_out_r3[1] top.main_tb.uut.uut_bancoreg.data_out_r3[0]

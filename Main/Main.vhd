@@ -67,7 +67,7 @@ architecture Main_arch of Main is
             
             -- Sinais de controle
             jump_enable : out std_logic;
-            branch_enable : out std_logic;
+            ble_enable, bhs_enable : out std_logic;
             mov_enable_accumulator : out std_logic;
             pc_write_enable : out std_logic;
             ir_write_enable : out std_logic;
@@ -132,7 +132,8 @@ architecture Main_arch of Main is
 
     -- Sinais de controle da Control_Unit
     signal jump_enable : std_logic;
-    signal ctrl_branch_enable : std_logic;
+    signal ble_enable : std_logic;
+    signal bhs_enable : std_logic;
     signal mov_enable_accumulator : std_logic;
     signal pc_write_enable : std_logic;
     signal ir_write_enable : std_logic;
@@ -169,7 +170,8 @@ architecture Main_arch of Main is
 
         input_0_c <= (15 downto 10 => ir_out(9)) & ir_out(9 downto 0);
 
-        branch_enable <= '1' when ctrl_branch_enable = '1' and (less_equal = '1' or higher_same = '1') else '0';
+        branch_enable <= '1' when ble_enable = '1' and less_equal = '1' else 
+                         '1' when bhs_enable = '1' and higher_same = '1' else '0';
 
         uut_MUX_reg_data_write : MUX_2x1_16bits port map (
             selector => reg_data_write_selector,
@@ -185,7 +187,7 @@ architecture Main_arch of Main is
             output => mux_branch_out
         );
 
-        branch_input1 <= (15 downto 5 => ir_out(9)) & ir_out(9 downto 5);
+        branch_input1 <= (15 downto 5 => '0') & ir_out(9 downto 5);
 
         uut_MUX_ALU_input_1 : MUX_2x1_16bits port map (
             selector => branch_alu_selector,
@@ -224,7 +226,8 @@ architecture Main_arch of Main is
             rst => rst,
             instruction => ir_out,  -- Usando instrução do IR, não diretamente da ROM
             jump_enable => jump_enable,
-            branch_enable => ctrl_branch_enable,
+            ble_enable => ble_enable,
+            bhs_enable => bhs_enable,
             mov_enable_accumulator => mov_enable_accumulator,
             pc_write_enable => pc_write_enable,
             ir_write_enable => ir_write_enable,
