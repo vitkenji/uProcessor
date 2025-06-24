@@ -5,6 +5,10 @@ use ieee.numeric_std.all;
 -- Operações da ALU
 -- 10 -> soma [1+0 = 1; 0+1 = 1; 0+0 = 0; 1+1 = 10;]
 -- 11 -> subtração [1-0 = 1; 0-1 = 1; 1-1 = 0; 0-0 = 0]
+-- Carry (C)
+-- Overflow	(V)
+-- Zero	(Z)
+-- Sinal/Negativo (N)
 
 entity ALU is
     port (
@@ -12,6 +16,7 @@ entity ALU is
         operation_selector: in unsigned (2 downto 0);
         carry, sinal, zero: out std_logic;
         less_equal, higher_same : out std_logic;
+        overflow : out std_logic;  -- Nova porta para flag de overflow
         alu_result : out unsigned (15 downto 0)
     );
 end entity;
@@ -33,7 +38,9 @@ begin
     
     alu_result <= result_internal;
 
-    -- Flag Zero
+    -- Flags (Carry, zero, sinal, overflow)
+    -- BHS -> C == 1 
+    -- BLE -> Z == 1 OR N != V
     zero <= '1' when result_internal = "0000000000000000" else '0';
 
     less_equal <= '1' when input_0 <= input_1 else '0';
@@ -47,5 +54,19 @@ begin
     carry <= sum_result_17bits(16) when operation_selector = "010" else
              sub_result_17bits(16) when operation_selector = "011" or operation_selector = "001" else
              '0';
+             
+    -- Flag Overflow (Se os sinais dos operandos e o sinal do resultado seguem um padrão impossível para a operação (como dois positivos gerando negativo), isso só pode ocorrer se houve estouro)
+    -- Overflow na adição: Se ambos os operandos têm o mesmo sinal, mas o resultado tem sinal diferente
+    -- Overflow na subtração: Se o primeiro operando tem sinal diferente do segundo, e o resultado tem o mesmo sinal do segundo
+    overflow <= 
+      -- Para adição (010)
+      ((not input_0(15) and not input_1(15) and result_internal(15)) or -- Dois positivos dando negativo
+       (input_0(15) and input_1(15) and not result_internal(15)))       -- Dois negativos dando positivo
+       when operation_selector = "010" else
+      -- Para subtração (011 ou 001)
+      ((not input_0(15) and input_1(15) and result_internal(15)) or     -- Positivo menos negativo dando negativo
+       (input_0(15) and not input_1(15) and not result_internal(15)))   -- Negativo menos positivo dando positivo
+       when (operation_selector = "011" or operation_selector = "001") else
+      '0';
 
 end architecture;

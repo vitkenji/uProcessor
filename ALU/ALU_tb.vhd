@@ -11,6 +11,8 @@ architecture ALU_tb_arch of ALU_tb is
         input_0, input_1 : in unsigned (15 downto 0);
         operation_selector : in unsigned (2 downto 0);
         carry, sinal, zero : out std_logic;
+        less_equal, higher_same : out std_logic;
+        overflow : out std_logic;
         alu_result: out unsigned (15 downto 0)
     );
     end component;
@@ -18,6 +20,8 @@ architecture ALU_tb_arch of ALU_tb is
     signal input_0, input_1 : unsigned (15 downto 0);
     signal operation_selector : unsigned (2 downto 0);
     signal carry, sinal, zero : std_logic;
+    signal less_equal, higher_same : std_logic;
+    signal overflow : std_logic;
     signal alu_result : unsigned (15 downto 0);
 
 begin
@@ -28,6 +32,9 @@ begin
         carry => carry,
         sinal => sinal,
         zero => zero,
+        less_equal => less_equal,
+        higher_same => higher_same,
+        overflow => overflow,
         alu_result => alu_result
     );
     

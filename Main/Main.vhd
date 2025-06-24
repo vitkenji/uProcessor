@@ -78,7 +78,7 @@ architecture Main_arch of Main is
             pc_write_enable, ir_write_enable, accumulator_write_enable, 
             reg_write_enable, ram_write_enable : out std_logic;
 
-            reg_data_write_selector, branch_alu_selector : out std_logic;
+            reg_data_write_selector : out std_logic;
 
             accumulator_selector : out unsigned (1 downto 0);
             -- Dados de controle
@@ -86,7 +86,7 @@ architecture Main_arch of Main is
         );
     end component;
 
-     component bancoReg
+    component bancoReg
         port(
             clk: in std_logic;
             rst: in std_logic;
@@ -96,9 +96,9 @@ architecture Main_arch of Main is
             data_write: in unsigned(15 downto 0);
             reg_write: in unsigned(2 downto 0)
         );
-     end component;
+    end component;
 
-     component Instruction_Register
+    component Instruction_Register
         port(
             clk: in std_logic;
             rst: in std_logic;
@@ -106,9 +106,9 @@ architecture Main_arch of Main is
             instruction_in: in unsigned(16 downto 0);
             instruction_out: out unsigned(16 downto 0)
         );
-     end component;
+    end component;
 
-     component Accumulator
+    component Accumulator
         port (
             clk: in std_logic;
             rst : in std_logic;
@@ -116,17 +116,18 @@ architecture Main_arch of Main is
             data_in : in unsigned (15 downto 0);
             data_out : out unsigned (15 downto 0)
         );
-     end component;
-
-     component ALU
+    end component;     
+    
+    component ALU
         port (
             input_0, input_1 : in unsigned (15 downto 0);
             operation_selector: in unsigned (2 downto 0);
             carry, sinal, zero: out std_logic; 
             less_equal, higher_same : out std_logic;
+            overflow : out std_logic;
             alu_result : out unsigned (15 downto 0)
         );
-     end component;
+    end component;
 
     component RAM
         port (
@@ -136,26 +137,22 @@ architecture Main_arch of Main is
             ram_data_in : in unsigned (15 downto 0);
             ram_data_out : out unsigned (15 downto 0) 
         );
-    end component;
-
+    end component;    
+    
+    
     -- Sinais de interconexão
     signal pc_out, adder_out, branch_adder_out, mux_jump_out, mux_branch_out: unsigned (6 downto 0);
-    signal rom_out, ir_out: unsigned (16 downto 0);
-    signal accumulator_out, alu_out, bank_register_out, mux_acc_out, mux_reg_data_write_out, 
-           mux_alu_input1_out, ram_data_out : unsigned (15 downto 0);
+    signal rom_out, ir_out: unsigned (16 downto 0);    
+    signal accumulator_out, alu_out, bank_register_out, mux_acc_out, mux_reg_data_write_out, ram_data_out : unsigned (15 downto 0);
 
     -- Sinais de controle da Control_Unit
-    signal jump_enable, ble_enable, bhs_enable,
-           pc_write_enable, ir_write_enable, accumulator_write_enable, 
-           reg_write_enable, reg_data_write_selector, ram_write_enable : std_logic;
+    signal jump_enable, ble_enable, bhs_enable,pc_write_enable, ir_write_enable, accumulator_write_enable, reg_write_enable, reg_data_write_selector, ram_write_enable : std_logic;
     
     signal accumulator_selector : unsigned (1 downto 0);
-    signal ALU_operation : unsigned (2 downto 0);
-    signal branch_enable, branch_alu_selector : std_logic;
-    signal input_0_c, branch_input1  : unsigned (15 downto 0);
-
-    -- Flags da ALU
-    signal carry, sinal, zero, less_equal, higher_same  : std_logic;
+    signal ALU_operation : unsigned (2 downto 0);    
+    signal branch_enable : std_logic;
+    signal input_constant_LD : unsigned (15 downto 0);-- Flags da ALU
+    signal carry, sinal, zero, less_equal, higher_same, overflow : std_logic;
 
     begin
         uut_MUX_jump : MUX_2x1_7bits port map (
@@ -169,36 +166,32 @@ architecture Main_arch of Main is
             selector => accumulator_selector,
             input_0 => alu_out,  -- Para ADD/SUB vem da ALU
             input_1 => bank_register_out,  -- Para MOV vem do banco de registradores
-            input_2 => ram_data_out,
+            input_2 => ram_data_out, -- Para LW vem da RAM
             output => mux_acc_out
-        );
+        );        
 
-        input_0_c <= (15 downto 10 => ir_out(9)) & ir_out(9 downto 0);
+        -- O input_constant_LD é usado para o caso de LD, aonde a constante é carregada diretamente no registrador
+        input_constant_LD <= (15 downto 10 => ir_out(9)) & ir_out(9 downto 0);
 
-        branch_enable <= '1' when ble_enable = '1' and less_equal = '1' else 
-                         '1' when bhs_enable = '1' and higher_same = '1' else '0';
-
+        -- Mux utilizado no MOV Rn ou LD
         uut_MUX_reg_data_write : MUX_2x1_16bits port map (
             selector => reg_data_write_selector,
-            input_0 => input_0_c,
+            input_0 => input_constant_LD,
             input_1 => accumulator_out,
             output => mux_reg_data_write_out
         );
+
+        -- Branch é ativado com base nas flags da operação anterior da ALU (CMP, ADD, SUB)
+        -- BLE (Branch if Less or Equal): Salta se Z=1 OU N≠V (Zero ou Sinal≠Overflow)
+        -- BHS (Branch if Higher or Same): Salta se C=1 (Carry=1, resultado ≥ 0 em não sinalizado)
+        branch_enable <= '1' when ble_enable = '1' and (zero = '1' or sinal /= overflow) else 
+                         '1' when bhs_enable = '1' and carry = '1' else '0';
         
         uut_MUX_branch : MUX_2x1_7bits port map (
             selector => branch_enable,
             input_0 => adder_out,
             input_1 => branch_adder_out, 
             output => mux_branch_out
-        );
-
-        branch_input1 <= (15 downto 5 => '0') & ir_out(9 downto 5);
-
-        uut_MUX_ALU_input_1 : MUX_2x1_16bits port map (
-            selector => branch_alu_selector,
-            input_0 => bank_register_out,
-            input_1 => branch_input1,
-            output => mux_alu_input1_out
         );
         
         uut_PC : PC port map (
@@ -235,11 +228,10 @@ architecture Main_arch of Main is
             bhs_enable => bhs_enable,
             accumulator_selector => accumulator_selector,
             pc_write_enable => pc_write_enable,
-            ir_write_enable => ir_write_enable,
+            ir_write_enable => ir_write_enable,            
             accumulator_write_enable => accumulator_write_enable,
             reg_write_enable => reg_write_enable,
             reg_data_write_selector => reg_data_write_selector,
-            branch_alu_selector => branch_alu_selector,
             ram_write_enable => ram_write_enable,
             ALU_operation => ALU_operation
         );
@@ -258,17 +250,18 @@ architecture Main_arch of Main is
             write_enable => accumulator_write_enable,
             data_in => mux_acc_out,  -- Para ADD/SUB vem da ALU e para MOV vem do banco de registradores
             data_out => accumulator_out
-        );
-
+        );  
+              
         uut_ALU : ALU port map (
-            input_0 => accumulator_out,  -- Acumulador como primeiro operando
-            input_1 => mux_alu_input1_out,
+            input_0 => accumulator_out,
+            input_1 => bank_register_out,  
             operation_selector => ALU_operation,
             carry => carry,
             sinal => sinal,
             zero => zero,
             less_equal => less_equal,
             higher_same => higher_same,
+            overflow => overflow,
             alu_result => alu_out
         );
 

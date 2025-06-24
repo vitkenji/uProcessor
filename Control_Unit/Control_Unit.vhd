@@ -14,7 +14,7 @@ entity Control_Unit is
         pc_write_enable, ir_write_enable, accumulator_write_enable,
         reg_write_enable, ram_write_enable: out std_logic;
 
-        reg_data_write_selector, branch_alu_selector : out std_logic;
+        reg_data_write_selector : out std_logic;
 
         accumulator_selector : out unsigned (1 downto 0);
 
@@ -80,14 +80,20 @@ architecture Control_Unit_arch of Control_Unit is
 
         -- [Decode] Identifica a instrução e produz os sinais de controle
         opcode <= instruction (16 downto 13); -- 4 bits Mais Significativos da Instrução
-        reg <= instruction (12 downto 10); -- Não sei se precisa de um tratamento especial para registradores maiores que 5 (no meu banco so tenho de 0 a 5)
+        reg <= instruction (12 downto 10); 
         ld_constant <= instruction (9 downto 0);
         jump_adress <= instruction (12 downto 6); -- 7 bits do endereço de salto
 
-        -- [Execute] Executa as instruções
-
         -- Jump
-        jump_enable <= '1' when state_s = "01" and opcode = JUMP_OP else '0';
+        jump_enable <= '1' when state_s = "01" and opcode = JUMP_OP else '0';        -- BRANCH
+        -- As instruções BLE e BHS usam as flags definidas pela operação anterior da ALU
+        ble_enable <= '1' when state_s = "01" and opcode = BLE_OP else '0';
+        bhs_enable <= '1' when state_s = "01" and opcode = BHS_OP else '0';        -- BLE e BHS usam as flags definidas por operações anteriores (CMP, ADD, SUB)
+        -- não é necessário fazer comparação durante o branch
+        
+        pc_write_enable <= '1' when state_s = "01" else '0'; -- Habilita a escrita no PC para a próxima instrução
+
+        -- [Execute] Executa as instruções
 
         -- Load [Carregar um valor imediato no registrador indicado]
         reg_write_enable_ld <= '1' when state_s = "10" and opcode = LD_OP else '0';
@@ -108,19 +114,12 @@ architecture Control_Unit_arch of Control_Unit is
         accumulator_write_enable_sub <= '1' when state_s = "10" and opcode = SUB_OP else '0'; -- Habilita a escrita no acumulador após a operação de SUB
 
         --LW
-        accumulator_write_enable_lw <= '1' when state_s = "10" and opcode = LW_OP else '0';
-
-        -- BRANCH
-        ble_enable <= '1' when state_s = "01" and opcode = BLE_OP else '0';
-        bhs_enable <= '1' when state_s = "01" and opcode = BHS_OP else '0';  
-        branch_alu_selector <= '1' when state_s = "01" and (opcode = BLE_OP or opcode = BHS_OP) else '0';
-
-        -- COMPARAÇÃO
+        accumulator_write_enable_lw <= '1' when state_s = "10" and opcode = LW_OP else '0';        -- COMPARAÇÃO
         -- O objetivo da CMPR é comparar dois valores, alterando apenas as flags, sem modificar o valor de nenhum registrador.
-        -- a ULA realiza uma subtração entre os operandos, mas não armazena o resultado em lugar nenhum. O resultado serve apenas para atualizar as flags (Zero, Sinal, Carry, Overflow)
+        -- A ULA realiza uma subtração entre os operandos, mas não armazena o resultado em lugar nenhum.
+        -- O resultado serve apenas para atualizar as flags (Zero, Sinal, Carry, Overflow)
+        -- Essas flags serão usadas posteriormente por instruções BLE e BHS
         ALU_operation_comp <= ALU_CMPR when state_s = "10" and opcode = COMP_OP else (others => '0'); -- Define a operação de comparação na ALU
-
-        pc_write_enable <= '1' when state_s = "01" else '0'; -- Habilita a escrita no PC para a próxima instrução
 
         reg_data_write_selector <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0'; 
 

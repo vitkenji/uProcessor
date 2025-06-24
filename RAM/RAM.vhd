@@ -13,6 +13,7 @@ entity RAM is
 end entity;
 
 architecture RAM_arch of RAM is
+    -- Memória de 16 bits de dados, com 65536 posições (2^16)
     type mem is array (0 to 65535) of unsigned (15 downto 0);
     signal content_ram : mem;
     begin
@@ -24,6 +25,7 @@ architecture RAM_arch of RAM is
                 end if;
             end if;
         end process;
+
         ram_data_out <= content_ram(to_integer(address));
 
 end architecture; 

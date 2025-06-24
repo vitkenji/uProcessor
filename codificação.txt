@@ -146,6 +146,7 @@ Exemplo:
 
 Instrução: BLE
 // Se  Reg1 <= Const1, salta Const2 instruções
+// A constante é somada ao endreço atual do PC.
 
 [o] Opcode: 0111 | 4 bits (16-13)
 [r] Reg1: 3 bits (12-10)
