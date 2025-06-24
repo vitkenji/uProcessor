@@ -179,3 +179,24 @@ Exemplo:
     - Reg: 001 (r1)
 
 Instrução: Saltos (Incondicional é absoluto e condicional é relativo)
+
+-----------------------------------------------------------------------------------------
+
+Instrução: SW
+
+[o] Opcode: 1001 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx
+
+RAM[rd] = A
+-----------------------------------------------------------------------------------------
+
+Instrução: LW
+
+[o] Opcode: 1010 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx
+
+A = RAM[rd]
