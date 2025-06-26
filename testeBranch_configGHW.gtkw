@@ -1,0 +1,65 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Tue Jun 24 22:47:15 2025
+[*]
+[dumpfile] "/mnt/c/Users/Adryan/Desktop/Adryan/Estudo/Faculdade/5ºPeriodo/ArquiteturaDeComputadores/TRABALHO_DUPLA/uProcessor/main_tb.ghw"
+[dumpfile_mtime] "Tue Jun 24 22:40:44 2025"
+[dumpfile_size] 4228482
+[savefile] "/mnt/c/Users/Adryan/Desktop/Adryan/Estudo/Faculdade/5ºPeriodo/ArquiteturaDeComputadores/TRABALHO_DUPLA/uProcessor/main_tb_configGHW.gtkw"
+[timestart] 1290000000
+[size] 1908 999
+[pos] -1 -1
+*-29.281952 3950000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.main_tb.
+[treeopen] top.main_tb.uut.
+[treeopen] top.main_tb.uut.uut_alu.
+[treeopen] top.main_tb.uut.uut_control_unit.uut_state_machine.
+[sst_width] 322
+[signals_width] 264
+[sst_expanded] 1
+[sst_vpaned_height] 430
+@28
+[color] 1
+top.main_tb.clk
+@24
+[color] 1
+#{top.main_tb.uut.uut_control_unit.uut_state_machine.state[1:0]} top.main_tb.uut.uut_control_unit.uut_state_machine.state[1] top.main_tb.uut.uut_control_unit.uut_state_machine.state[0]
+#{top.main_tb.uut.uut_pc.pc_out[6:0]} top.main_tb.uut.uut_pc.pc_out[6] top.main_tb.uut.uut_pc.pc_out[5] top.main_tb.uut.uut_pc.pc_out[4] top.main_tb.uut.uut_pc.pc_out[3] top.main_tb.uut.uut_pc.pc_out[2] top.main_tb.uut.uut_pc.pc_out[1] top.main_tb.uut.uut_pc.pc_out[0]
+#{top.main_tb.uut.accumulator_out[15:0]} top.main_tb.uut.accumulator_out[15] top.main_tb.uut.accumulator_out[14] top.main_tb.uut.accumulator_out[13] top.main_tb.uut.accumulator_out[12] top.main_tb.uut.accumulator_out[11] top.main_tb.uut.accumulator_out[10] top.main_tb.uut.accumulator_out[9] top.main_tb.uut.accumulator_out[8] top.main_tb.uut.accumulator_out[7] top.main_tb.uut.accumulator_out[6] top.main_tb.uut.accumulator_out[5] top.main_tb.uut.accumulator_out[4] top.main_tb.uut.accumulator_out[3] top.main_tb.uut.accumulator_out[2] top.main_tb.uut.accumulator_out[1] top.main_tb.uut.accumulator_out[0]
+#{top.main_tb.uut.uut_bancoreg.data_out_r0[15:0]} top.main_tb.uut.uut_bancoreg.data_out_r0[15] top.main_tb.uut.uut_bancoreg.data_out_r0[14] top.main_tb.uut.uut_bancoreg.data_out_r0[13] top.main_tb.uut.uut_bancoreg.data_out_r0[12] top.main_tb.uut.uut_bancoreg.data_out_r0[11] top.main_tb.uut.uut_bancoreg.data_out_r0[10] top.main_tb.uut.uut_bancoreg.data_out_r0[9] top.main_tb.uut.uut_bancoreg.data_out_r0[8] top.main_tb.uut.uut_bancoreg.data_out_r0[7] top.main_tb.uut.uut_bancoreg.data_out_r0[6] top.main_tb.uut.uut_bancoreg.data_out_r0[5] top.main_tb.uut.uut_bancoreg.data_out_r0[4] top.main_tb.uut.uut_bancoreg.data_out_r0[3] top.main_tb.uut.uut_bancoreg.data_out_r0[2] top.main_tb.uut.uut_bancoreg.data_out_r0[1] top.main_tb.uut.uut_bancoreg.data_out_r0[0]
+#{top.main_tb.uut.uut_bancoreg.data_out_r1[15:0]} top.main_tb.uut.uut_bancoreg.data_out_r1[15] top.main_tb.uut.uut_bancoreg.data_out_r1[14] top.main_tb.uut.uut_bancoreg.data_out_r1[13] top.main_tb.uut.uut_bancoreg.data_out_r1[12] top.main_tb.uut.uut_bancoreg.data_out_r1[11] top.main_tb.uut.uut_bancoreg.data_out_r1[10] top.main_tb.uut.uut_bancoreg.data_out_r1[9] top.main_tb.uut.uut_bancoreg.data_out_r1[8] top.main_tb.uut.uut_bancoreg.data_out_r1[7] top.main_tb.uut.uut_bancoreg.data_out_r1[6] top.main_tb.uut.uut_bancoreg.data_out_r1[5] top.main_tb.uut.uut_bancoreg.data_out_r1[4] top.main_tb.uut.uut_bancoreg.data_out_r1[3] top.main_tb.uut.uut_bancoreg.data_out_r1[2] top.main_tb.uut.uut_bancoreg.data_out_r1[1] top.main_tb.uut.uut_bancoreg.data_out_r1[0]
+#{top.main_tb.uut.uut_bancoreg.data_out_r2[15:0]} top.main_tb.uut.uut_bancoreg.data_out_r2[15] top.main_tb.uut.uut_bancoreg.data_out_r2[14] top.main_tb.uut.uut_bancoreg.data_out_r2[13] top.main_tb.uut.uut_bancoreg.data_out_r2[12] top.main_tb.uut.uut_bancoreg.data_out_r2[11] top.main_tb.uut.uut_bancoreg.data_out_r2[10] top.main_tb.uut.uut_bancoreg.data_out_r2[9] top.main_tb.uut.uut_bancoreg.data_out_r2[8] top.main_tb.uut.uut_bancoreg.data_out_r2[7] top.main_tb.uut.uut_bancoreg.data_out_r2[6] top.main_tb.uut.uut_bancoreg.data_out_r2[5] top.main_tb.uut.uut_bancoreg.data_out_r2[4] top.main_tb.uut.uut_bancoreg.data_out_r2[3] top.main_tb.uut.uut_bancoreg.data_out_r2[2] top.main_tb.uut.uut_bancoreg.data_out_r2[1] top.main_tb.uut.uut_bancoreg.data_out_r2[0]
+#{top.main_tb.uut.uut_bancoreg.data_out_r3[15:0]} top.main_tb.uut.uut_bancoreg.data_out_r3[15] top.main_tb.uut.uut_bancoreg.data_out_r3[14] top.main_tb.uut.uut_bancoreg.data_out_r3[13] top.main_tb.uut.uut_bancoreg.data_out_r3[12] top.main_tb.uut.uut_bancoreg.data_out_r3[11] top.main_tb.uut.uut_bancoreg.data_out_r3[10] top.main_tb.uut.uut_bancoreg.data_out_r3[9] top.main_tb.uut.uut_bancoreg.data_out_r3[8] top.main_tb.uut.uut_bancoreg.data_out_r3[7] top.main_tb.uut.uut_bancoreg.data_out_r3[6] top.main_tb.uut.uut_bancoreg.data_out_r3[5] top.main_tb.uut.uut_bancoreg.data_out_r3[4] top.main_tb.uut.uut_bancoreg.data_out_r3[3] top.main_tb.uut.uut_bancoreg.data_out_r3[2] top.main_tb.uut.uut_bancoreg.data_out_r3[1] top.main_tb.uut.uut_bancoreg.data_out_r3[0]
+#{top.main_tb.uut.uut_bancoreg.data_out_r4[15:0]} top.main_tb.uut.uut_bancoreg.data_out_r4[15] top.main_tb.uut.uut_bancoreg.data_out_r4[14] top.main_tb.uut.uut_bancoreg.data_out_r4[13] top.main_tb.uut.uut_bancoreg.data_out_r4[12] top.main_tb.uut.uut_bancoreg.data_out_r4[11] top.main_tb.uut.uut_bancoreg.data_out_r4[10] top.main_tb.uut.uut_bancoreg.data_out_r4[9] top.main_tb.uut.uut_bancoreg.data_out_r4[8] top.main_tb.uut.uut_bancoreg.data_out_r4[7] top.main_tb.uut.uut_bancoreg.data_out_r4[6] top.main_tb.uut.uut_bancoreg.data_out_r4[5] top.main_tb.uut.uut_bancoreg.data_out_r4[4] top.main_tb.uut.uut_bancoreg.data_out_r4[3] top.main_tb.uut.uut_bancoreg.data_out_r4[2] top.main_tb.uut.uut_bancoreg.data_out_r4[1] top.main_tb.uut.uut_bancoreg.data_out_r4[0]
+#{top.main_tb.uut.uut_bancoreg.data_out_r5[15:0]} top.main_tb.uut.uut_bancoreg.data_out_r5[15] top.main_tb.uut.uut_bancoreg.data_out_r5[14] top.main_tb.uut.uut_bancoreg.data_out_r5[13] top.main_tb.uut.uut_bancoreg.data_out_r5[12] top.main_tb.uut.uut_bancoreg.data_out_r5[11] top.main_tb.uut.uut_bancoreg.data_out_r5[10] top.main_tb.uut.uut_bancoreg.data_out_r5[9] top.main_tb.uut.uut_bancoreg.data_out_r5[8] top.main_tb.uut.uut_bancoreg.data_out_r5[7] top.main_tb.uut.uut_bancoreg.data_out_r5[6] top.main_tb.uut.uut_bancoreg.data_out_r5[5] top.main_tb.uut.uut_bancoreg.data_out_r5[4] top.main_tb.uut.uut_bancoreg.data_out_r5[3] top.main_tb.uut.uut_bancoreg.data_out_r5[2] top.main_tb.uut.uut_bancoreg.data_out_r5[1] top.main_tb.uut.uut_bancoreg.data_out_r5[0]
+@28
+top.main_tb.uut.jump_enable
+top.main_tb.uut.bhs_enable
+top.main_tb.uut.ble_enable
+top.main_tb.uut.branch_enable
+@24
+top.main_tb.uut.uut_alu.overflow
+@28
+top.main_tb.uut.overflow_out
+@24
+top.main_tb.uut.uut_alu.sinal
+@28
+top.main_tb.uut.sinal_out
+@24
+top.main_tb.uut.uut_alu.carry
+@28
+top.main_tb.uut.carry_out
+@24
+top.main_tb.uut.uut_alu.zero
+@28
+top.main_tb.uut.zero_out
+@29
+#{top.main_tb.uut.uut_alu.operation_selector[2:0]} top.main_tb.uut.uut_alu.operation_selector[2] top.main_tb.uut.uut_alu.operation_selector[1] top.main_tb.uut.uut_alu.operation_selector[0]
+@24
+#{top.main_tb.uut.uut_alu.input_0[15:0]} top.main_tb.uut.uut_alu.input_0[15] top.main_tb.uut.uut_alu.input_0[14] top.main_tb.uut.uut_alu.input_0[13] top.main_tb.uut.uut_alu.input_0[12] top.main_tb.uut.uut_alu.input_0[11] top.main_tb.uut.uut_alu.input_0[10] top.main_tb.uut.uut_alu.input_0[9] top.main_tb.uut.uut_alu.input_0[8] top.main_tb.uut.uut_alu.input_0[7] top.main_tb.uut.uut_alu.input_0[6] top.main_tb.uut.uut_alu.input_0[5] top.main_tb.uut.uut_alu.input_0[4] top.main_tb.uut.uut_alu.input_0[3] top.main_tb.uut.uut_alu.input_0[2] top.main_tb.uut.uut_alu.input_0[1] top.main_tb.uut.uut_alu.input_0[0]
+#{top.main_tb.uut.uut_alu.input_1[15:0]} top.main_tb.uut.uut_alu.input_1[15] top.main_tb.uut.uut_alu.input_1[14] top.main_tb.uut.uut_alu.input_1[13] top.main_tb.uut.uut_alu.input_1[12] top.main_tb.uut.uut_alu.input_1[11] top.main_tb.uut.uut_alu.input_1[10] top.main_tb.uut.uut_alu.input_1[9] top.main_tb.uut.uut_alu.input_1[8] top.main_tb.uut.uut_alu.input_1[7] top.main_tb.uut.uut_alu.input_1[6] top.main_tb.uut.uut_alu.input_1[5] top.main_tb.uut.uut_alu.input_1[4] top.main_tb.uut.uut_alu.input_1[3] top.main_tb.uut.uut_alu.input_1[2] top.main_tb.uut.uut_alu.input_1[1] top.main_tb.uut.uut_alu.input_1[0]
+@28
+top.main_tb.uut.uut_alu.carry_sub
+[pattern_trace] 1
+[pattern_trace] 0

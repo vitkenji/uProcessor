@@ -1,0 +1,33 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Tue Jun 24 20:06:38 2025
+[*]
+[dumpfile] "/mnt/c/Users/Adryan/Desktop/Adryan/Estudo/Faculdade/5ºPeriodo/ArquiteturaDeComputadores/TRABALHO_DUPLA/uProcessor/ALU_tb.ghw"
+[dumpfile_mtime] "Tue Jun 24 20:01:18 2025"
+[dumpfile_size] 1997
+[savefile] "/mnt/c/Users/Adryan/Desktop/Adryan/Estudo/Faculdade/5ºPeriodo/ArquiteturaDeComputadores/TRABALHO_DUPLA/uProcessor/ALU_tb_configGHW.gtkw"
+[timestart] 63670000
+[size] 1415 600
+[pos] 469 307
+*-23.000000 61290000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.alu_tb.
+[sst_width] 214
+[signals_width] 287
+[sst_expanded] 1
+[sst_vpaned_height] 151
+@24
+#{top.alu_tb.input_0[15:0]} top.alu_tb.input_0[15] top.alu_tb.input_0[14] top.alu_tb.input_0[13] top.alu_tb.input_0[12] top.alu_tb.input_0[11] top.alu_tb.input_0[10] top.alu_tb.input_0[9] top.alu_tb.input_0[8] top.alu_tb.input_0[7] top.alu_tb.input_0[6] top.alu_tb.input_0[5] top.alu_tb.input_0[4] top.alu_tb.input_0[3] top.alu_tb.input_0[2] top.alu_tb.input_0[1] top.alu_tb.input_0[0]
+#{top.alu_tb.input_1[15:0]} top.alu_tb.input_1[15] top.alu_tb.input_1[14] top.alu_tb.input_1[13] top.alu_tb.input_1[12] top.alu_tb.input_1[11] top.alu_tb.input_1[10] top.alu_tb.input_1[9] top.alu_tb.input_1[8] top.alu_tb.input_1[7] top.alu_tb.input_1[6] top.alu_tb.input_1[5] top.alu_tb.input_1[4] top.alu_tb.input_1[3] top.alu_tb.input_1[2] top.alu_tb.input_1[1] top.alu_tb.input_1[0]
+@28
+#{top.alu_tb.operation_selector[2:0]} top.alu_tb.operation_selector[2] top.alu_tb.operation_selector[1] top.alu_tb.operation_selector[0]
+top.alu_tb.overflow
+top.alu_tb.zero
+top.alu_tb.sinal
+top.alu_tb.carry
+@24
+#{top.alu_tb.alu_result[15:0]} top.alu_tb.alu_result[15] top.alu_tb.alu_result[14] top.alu_tb.alu_result[13] top.alu_tb.alu_result[12] top.alu_tb.alu_result[11] top.alu_tb.alu_result[10] top.alu_tb.alu_result[9] top.alu_tb.alu_result[8] top.alu_tb.alu_result[7] top.alu_tb.alu_result[6] top.alu_tb.alu_result[5] top.alu_tb.alu_result[4] top.alu_tb.alu_result[3] top.alu_tb.alu_result[2] top.alu_tb.alu_result[1] top.alu_tb.alu_result[0]
+@29
+#{top.alu_tb.alu_result[15:0]} top.alu_tb.alu_result[15] top.alu_tb.alu_result[14] top.alu_tb.alu_result[13] top.alu_tb.alu_result[12] top.alu_tb.alu_result[11] top.alu_tb.alu_result[10] top.alu_tb.alu_result[9] top.alu_tb.alu_result[8] top.alu_tb.alu_result[7] top.alu_tb.alu_result[6] top.alu_tb.alu_result[5] top.alu_tb.alu_result[4] top.alu_tb.alu_result[3] top.alu_tb.alu_result[2] top.alu_tb.alu_result[1] top.alu_tb.alu_result[0]
+[pattern_trace] 1
+[pattern_trace] 0

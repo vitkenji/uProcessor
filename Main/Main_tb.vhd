@@ -12,7 +12,7 @@ architecture Main_tb_arch of Main_tb is
     );
     end component;
 
-    constant period_time : time := 100 ns;
+    constant period_time : time := 10 ns;
     signal finished : std_logic := '0';
     signal clk , reset : std_logic;
     
@@ -32,7 +32,7 @@ begin
 
     sim_time_proc : process
     begin
-        wait for 100 us;
+        wait for 46 us;
         finished <= '1';
         wait;
     end process sim_time_proc; 

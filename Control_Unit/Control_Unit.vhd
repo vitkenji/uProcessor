@@ -11,7 +11,7 @@ entity Control_Unit is
 
         -- Sinais de controle
         jump_enable, ble_enable, bhs_enable,
-        pc_write_enable, ir_write_enable, accumulator_write_enable,
+        pc_write_enable, ir_write_enable, accumulator_write_enable, flag_write_enable,
         reg_write_enable, ram_write_enable: out std_logic;
 
         reg_data_write_selector : out std_logic;
@@ -38,14 +38,20 @@ architecture Control_Unit_arch of Control_Unit is
     constant ALU_ADD: unsigned (2 downto 0) := "010"; -- Operação de Adição
     constant ALU_SUB: unsigned (2 downto 0) := "011"; -- Operação de Subtração
     constant ALU_CMPR: unsigned (2 downto 0) := "001"; -- Operação de Comparação (Subtração para verificação de flags)
+    constant ALU_AND: unsigned (2 downto 0) := "110"; -- Operação AND
+    constant ALU_OR: unsigned (2 downto 0) := "111"; -- Operação OR
 
     -- Definição de opcodes
     constant JUMP_OP: unsigned (3 downto 0) := "1111"; -- Opcode para JUMP
     constant LD_OP: unsigned (3 downto 0) := "0001"; -- Opcode para LOAD
     constant MOV_ACC_OP: unsigned (3 downto 0) := "0100"; -- Opcode para MOV Accumulator
     constant MOV_REG_OP: unsigned (3 downto 0) := "0110"; -- Opcode para MOV Register
+    
     constant ADD_OP: unsigned (3 downto 0) := "0010"; -- Opcode para ADD
     constant SUB_OP: unsigned (3 downto 0) := "0011"; -- Opcode para SUB
+    constant AND_OP: unsigned (3 downto 0) := "1101"; -- Opcode para AND
+    constant OR_OP: unsigned (3 downto 0) := "1110"; -- Opcode para OR
+
     constant COMP_OP: unsigned (3 downto 0) := "0101"; -- Opcode para COMPARAÇÃO
     constant BLE_OP : unsigned (3 downto 0) := "0111"; -- Opcode para BLE
     constant BHS_OP : unsigned (3 downto 0) := "1000"; -- Opcode para BHS
@@ -114,11 +120,12 @@ architecture Control_Unit_arch of Control_Unit is
         accumulator_write_enable_sub <= '1' when state_s = "10" and opcode = SUB_OP else '0'; -- Habilita a escrita no acumulador após a operação de SUB
 
         --LW
-        accumulator_write_enable_lw <= '1' when state_s = "10" and opcode = LW_OP else '0';        -- COMPARAÇÃO
+        accumulator_write_enable_lw <= '1' when state_s = "10" and opcode = LW_OP else '0';
+        
+        
         -- O objetivo da CMPR é comparar dois valores, alterando apenas as flags, sem modificar o valor de nenhum registrador.
         -- A ULA realiza uma subtração entre os operandos, mas não armazena o resultado em lugar nenhum.
         -- O resultado serve apenas para atualizar as flags (Zero, Sinal, Carry, Overflow)
-        -- Essas flags serão usadas posteriormente por instruções BLE e BHS
         ALU_operation_comp <= ALU_CMPR when state_s = "10" and opcode = COMP_OP else (others => '0'); -- Define a operação de comparação na ALU
 
         reg_data_write_selector <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0'; 
@@ -128,6 +135,7 @@ architecture Control_Unit_arch of Control_Unit is
         -- COMBINAÇÃO DOS SINAIS AUXILIARES
         reg_write_enable <= reg_write_enable_ld or reg_write_enable_mov;
         accumulator_write_enable <= accumulator_write_enable_mov or accumulator_write_enable_add or accumulator_write_enable_sub or accumulator_write_enable_lw;
+        
         ALU_operation <= ALU_operation_add or ALU_operation_sub or ALU_operation_comp;
-
+        flag_write_enable <= '1' when state_s = "10" and (opcode = COMP_OP or opcode = ADD_OP or opcode = SUB_OP or opcode = AND_OP or opcode = OR_OP) else '0'; -- Habilita a escrita nas flags apenas nas operações da ULA
 end architecture;

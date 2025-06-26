@@ -10,8 +10,8 @@
 | MOV A,Rn   | 0100   |  R     | A = Rn
 | CMPR       | 0101   |  R     | 
 | MOV Rn,A   | 0110   |  R     | Rn = A
-| BLE Rn,i,b | 0111   |  B     | Rn <= i ? adr+b 
-| BHS Rn,i,b | 1000   |  B     | Rn >= i ? adr+b
+| BLE b      | 0111   |  B     | A <= reg ? PC+b (branch if less or equal, usa flags da ALU) 
+| BHS b      | 1000   |  B     | A >= reg ? PC+b (branch if higher or same, usa flags da ALU)
 | SW         | 1001   |  M     | RAM[Rn]= A
 | LW         | 1010   |  M     | A =  RAM[Rn]
 | JUMP i     | 1111   |  J     | address = i

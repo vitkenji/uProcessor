@@ -15,7 +15,7 @@ end entity;
 architecture RAM_arch of RAM is
     -- Memória de 16 bits de dados, com 65536 posições (2^16)
     type mem is array (0 to 65535) of unsigned (15 downto 0);
-    signal content_ram : mem;
+    signal content_ram : mem := (others => (others => '0'));
     begin
         process(clk, write_enable)
         begin
@@ -28,4 +28,4 @@ architecture RAM_arch of RAM is
 
         ram_data_out <= content_ram(to_integer(address));
 
-end architecture; 
+end architecture;

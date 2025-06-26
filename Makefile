@@ -1,6 +1,7 @@
 # Fontes
 SRC_ALU=ALU/ALU.vhd
-SRC_REGS=Registers/reg16bits.vhd Registers/bancoReg.vhd Registers/Accumulator.vhd Registers/Instruction_Register.vhd
+SRC_ALU_TB=ALU/ALU_tb.vhd
+SRC_REGS=Registers/reg16bits.vhd Registers/bancoReg.vhd Registers/Accumulator.vhd Registers/Instruction_Register.vhd Registers/flagReg.vhd
 SRC_MAIN=Main/Main.vhd
 SRC_TB=Main/Main_tb.vhd
 SRC_ROM=ROM/ROM.vhd
@@ -94,7 +95,21 @@ view_padrao: run
 view: run
 	gtkwave $(WAVE) $(TB_ENTITY)_configGHW.gtkw
 
+analyze_alu:
+	ghdl -a $(SRC_ALU)
+	ghdl -a $(SRC_ALU_TB)
+
+elaborate_alu: analyze_alu
+	ghdl -e ALU
+	ghdl -e ALU_tb
+
+run_alu: elaborate_alu
+	ghdl -r ALU_tb --wave=ALU_tb.ghw
+
+view_alu: run_alu
+	gtkwave ALU_tb_configGHW.gtkw
 
 # Limpeza dos arquivos gerados
 clean:
 	rm -f *.o *.cf $(WAVE) $(ENTITIES) $(TB_ENTITY)
+

@@ -144,40 +144,47 @@ Exemplo:
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Instrução: BLE
-// Se  Reg1 <= Const1, salta Const2 instruções
-// A constante é somada ao endreço atual do PC.
+Instrução: BLE (Branch if Less or Equal)
+\\ Branch condicional baseado nas flags definidas por operações anteriores (CMP, ADD, SUB)
+\\ Salta se A <= Reg1, ou seja, se (Zero = 1 OU Sinal ≠ Overflow)
+\\ A comparação deve ser feita antes com uma instrução CMP, ADD ou SUB
 
 [o] Opcode: 0111 | 4 bits (16-13)
-[r] Reg1: 3 bits (12-10)
-[s] Const1 : 5 bits (9-7)
-[c] Const2: 5 bits (6 - 0)
+[d] Delta: 6 bits (12-7) [Deslocamento relativo a ser adicionado ao PC]
 
-oooo rrr sssss ccccc
+oooo dddddd xxxxxx
 
 Limitações:
+    - Depende das flags definidas por operações anteriores
+    - O salto é relativo ao PC atual
+    - O deslocamento está limitado a -32 a +31 instruções
 
 Exemplo:
-    - BLE R1, 20(0111 001 00010100) 
+    - BLE 5 (0111 000101 000000)
     - Opcode: 0111 (BLE)
-    - Reg: 001 (r1)
+    - Delta: 000101 (5 em binário) - salta 5 instruções à frente se a condição for verdadeira
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Instrução: BHS
+Instrução: BHS (Branch if Higher or Same)
+\\ Branch condicional baseado nas flags definidas por operações anteriores (CMP, ADD, SUB)
+\\ Salta se A >= Reg1 (em não sinalizado), ou seja, se Carry = 1
+\\ A comparação deve ser feita antes com uma instrução CMP, ADD ou SUB
 
-[o] Opcode: 0111 | 4 bits (16-13)
-[r] Reg: 3 bits (12-10)
-[c] Const: 8 bits (9 - 2)
+[o] Opcode: 1000 | 4 bits (16-13)
+[d] Delta: 6 bits (12-7) [Deslocamento relativo a ser adicionado ao PC]
 
-oooo rrr xxxxxxxxxx
+oooo dddddd xxxxxx
 
 Limitações:
+    - Depende das flags definidas por operações anteriores
+    - O salto é relativo ao PC atual
+    - O deslocamento está limitado a -32 a +31 instruções
 
 Exemplo:
-    - BHS R1, 20(0111 001 00010100) 
-    - Opcode: 0111 (BLE)
-    - Reg: 001 (r1)
+    - BHS 5 (1000 000101 000000) 
+    - Opcode: 1000 (BHS)
+    - Delta: 000101 (5 em binário) - salta 5 instruções à frente se a condição for verdadeira
 
 Instrução: Saltos (Incondicional é absoluto e condicional é relativo)
 
@@ -190,7 +197,7 @@ Instrução: SW
 
 oooo rrr xxxxxxxxxx
 
-RAM[rd] = A
+RAM[rd] = A -> ESCREVER o valor do acumulador na RAM
 -----------------------------------------------------------------------------------------
 
 Instrução: LW
@@ -200,4 +207,42 @@ Instrução: LW
 
 oooo rrr xxxxxxxxxx
 
-A = RAM[rd]
+A = RAM[rd] -> CARREGAR o valor da RAM no acumulador
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: AND
+\\ Operação lógica AND bit a bit entre acumulador e registrador
+
+[o] Opcode: 1101 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx
+
+Limitações:
+    - Só pode ser feito entre registradores (r0 a r5)
+    - O resultado é armazenado no acumulador
+
+Exemplo:
+    - AND r5 (1101 101)
+    - Opcode: 1101 (AND)
+    - Reg: 101 (r5)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Instrução: OR
+\\ Operação lógica OR bit a bit entre acumulador e registrador
+
+[o] Opcode: 1110 | 4 bits (16-13)
+[r] Reg: 3 bits (12-10)
+
+oooo rrr xxxxxxxxxx
+
+Limitações:
+    - Só pode ser feito entre registradores (r0 a r5)
+    - O resultado é armazenado no acumulador
+
+Exemplo:
+    - OR r5 (1110 101)
+    - Opcode: 1110 (OR)
+    - Reg: 101 (r5)
