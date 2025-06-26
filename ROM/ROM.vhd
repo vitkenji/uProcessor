@@ -112,8 +112,8 @@ architecture ROM_arch of ROM is
         50  => NOP,
         51  => "11000000000000000", -- Instrução inválida (opcode não reconhecido)
         52  => LD & R0 & "0000000000", -- Essa instrução não vai ser executada
-        52  => NOP,
         53  => NOP,
+        54  => NOP,
 
         others => (others =>'0')
     );
