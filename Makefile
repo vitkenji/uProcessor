@@ -93,7 +93,7 @@ view_padrao: run
 
 # Visualização com configuração personalizada
 view: run
-	gtkwave $(WAVE) $(TB_ENTITY)_configGHW.gtkw
+	gtkwave $(WAVE) $(TB_ENTITY)_CRIVO_configGHW.gtkw
 
 analyze_alu:
 	ghdl -a $(SRC_ALU)

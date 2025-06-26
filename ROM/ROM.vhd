@@ -34,10 +34,8 @@ architecture ROM_arch of ROM is
     constant R4: unsigned (2 downto 0) := "100"; -- Registrador R4
     constant R5: unsigned (2 downto 0) := "101"; -- Registrador R5
 
-    constant LOOP_RAM: unsigned (5 downto 0) := "111101"; -- Endereço de início do loop para preencher a RAM
-    constant LOOP_CRIVO: unsigned (5 downto 0) := "101110"; -- Endereço de início do loop do Crivo de Eratóstenes
-    constant INCR_CAND: unsigned (5 downto 0) := "001101"; -- Endereço para incrementar o candidato
-    constant PROXIMO_CANDIDATO: unsigned (5 downto 0) := "000110"; -- Endereço para o próximo candidato no Crivo de Eratóstenes
+    constant NOP: unsigned (16 downto 0) := (others => '0'); -- Instrução NOP (No Operation)
+    
     type mem is array (0 to 127) of unsigned(16 downto 0);
 
     constant ROM_content : mem := (
@@ -108,6 +106,15 @@ architecture ROM_arch of ROM is
         46  => MOV_REG & R0 & "0000000000", -- MOV R0, A (atualiza endereço)
         47  => CMP & R1 & "0000000000", -- CMP R1 (A - R1 = R0 - 32)
         48  => BLE & "110011" & "0000000", -- Se R0 <= 32, volta para linha 35 (delta = 35-48 = -13 = 110011)
+        
+        -- opcode invalido
+        49  => NOP,
+        50  => NOP,
+        51  => "11000000000000000", -- Instrução inválida (opcode não reconhecido)
+        52  => LD & R0 & "0000000000", -- Essa instrução não vai ser executada
+        52  => NOP,
+        53  => NOP,
+
         others => (others =>'0')
     );
     

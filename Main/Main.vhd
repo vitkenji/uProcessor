@@ -4,7 +4,11 @@ use ieee.numeric_std.all;
 
 entity Main is
     port (
-        clk, rst : in std_logic
+        clk, rst : in std_logic;
+        -- Novo pino para exibir o número primo atual
+        primo_out : out unsigned(15 downto 0);
+        -- Sinal de exceção para opcode inválido
+        exception : out std_logic
     );
 end entity;
 
@@ -83,7 +87,9 @@ architecture Main_arch of Main is
             accumulator_selector : out unsigned (1 downto 0);
             -- Dados de controle
             ALU_operation : out unsigned (2 downto 0);
-            flag_write_enable : out std_logic
+            flag_write_enable : out std_logic;
+            -- Sinal de exceção
+            exception : out std_logic
         );
     end component;
 
@@ -148,11 +154,22 @@ architecture Main_arch of Main is
             flag_out: out std_logic
         );
     end component;
+
+    component reg16bits
+        port(
+            clk: in std_logic;
+            rst: in std_logic;
+            write_enable: in std_logic;
+            data_in: in unsigned(15 downto 0);
+            data_out: out unsigned(15 downto 0)
+        );
+    end component;
     
     -- Sinais de interconexão
     signal pc_out, adder_out, branch_adder_out, mux_jump_out, mux_branch_out: unsigned (6 downto 0);
     signal rom_out, ir_out: unsigned (16 downto 0);    
     signal accumulator_out, alu_out, bank_register_out, mux_acc_out, mux_reg_data_write_out, ram_data_out : unsigned (15 downto 0);
+    signal primo_reg_out : unsigned(15 downto 0);
 
     -- Sinais de controle da Control_Unit
     signal jump_enable, ble_enable, bhs_enable,pc_write_enable, ir_write_enable, accumulator_write_enable, reg_write_enable, reg_data_write_selector, ram_write_enable : std_logic;
@@ -165,6 +182,8 @@ architecture Main_arch of Main is
 
     -- Sinal para controle de escrita das flags
     signal flag_write_enable : std_logic;
+    signal primo_reg_we : std_logic;
+    signal exception_signal : std_logic;
     
     begin
         ------------------------------------------
@@ -251,7 +270,8 @@ architecture Main_arch of Main is
             reg_data_write_selector => reg_data_write_selector,
             ram_write_enable => ram_write_enable,
             ALU_operation => ALU_operation,
-            flag_write_enable => flag_write_enable
+            flag_write_enable => flag_write_enable,
+            exception => exception_signal
         );
         
         ------------------------------------------
@@ -328,6 +348,19 @@ architecture Main_arch of Main is
             ram_data_out => ram_data_out 
         );
         
+        -- Write enable para o registrador de primos: só ativa quando RAM[0] está sendo lido
+        primo_reg_we <= '1' when bank_register_out = 0 else '0';
+        
+        uut_primoReg : reg16bits port map (
+            clk => clk,
+            rst => rst,
+            write_enable => primo_reg_we,
+            data_in => ram_data_out,
+            data_out => primo_reg_out
+        );
+        
+        primo_out <= primo_reg_out;
+        
         ------------------------------------------
         -- MULTIPLEXADORES DE DADOS --
         ------------------------------------------
@@ -351,5 +384,8 @@ architecture Main_arch of Main is
             input_1 => accumulator_out,   -- Para MOV Rn (valor do acumulador)
             output => mux_reg_data_write_out
         );
+        
+        -- Conecta o sinal de exceção à saída
+        exception <= exception_signal;
 
 end architecture;

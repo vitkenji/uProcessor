@@ -8,18 +8,24 @@ end entity;
 architecture Main_tb_arch of Main_tb is
     component Main
     port (
-        clk, rst: in std_logic
+        clk, rst: in std_logic;
+        primo_out: out unsigned(15 downto 0);
+        exception: out std_logic
     );
     end component;
 
     constant period_time : time := 10 ns;
     signal finished : std_logic := '0';
     signal clk , reset : std_logic;
+    signal primo_out : unsigned(15 downto 0); -- Sinal para monitorar os primos
+    signal exception_signal : std_logic; -- Sinal para monitorar exceções
     
 begin
     uut : Main port map(
         clk => clk,
-        rst => reset
+        rst => reset,
+        primo_out => primo_out,
+        exception => exception_signal
     );
 
     reset_global : process

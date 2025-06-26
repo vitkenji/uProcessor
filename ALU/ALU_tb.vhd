@@ -36,6 +36,15 @@ begin
     
     process
     begin
+        
+        -- Testar o AND
+        operation_selector <= "110"; -- AND
+        input_0 <= to_unsigned(12, 16); -- 1000
+        input_1 <= to_unsigned(10, 16); -- 1010
+        wait for 10 ns;
+        -- Resultado esperado: 
+        
+        
         -- Teste 1: Soma simples (carry=0, zero=0, sinal=0, overflow=0)
         operation_selector <= "010"; -- soma
         input_0 <= to_unsigned(5, 16);

@@ -19,7 +19,10 @@ entity Control_Unit is
         accumulator_selector : out unsigned (1 downto 0);
 
         -- Dados de controle
-        ALU_operation : out unsigned (2 downto 0)
+        ALU_operation : out unsigned (2 downto 0);
+        
+        -- Sinal de exceção
+        exception : out std_logic
     );
 end entity;
 
@@ -72,6 +75,9 @@ architecture Control_Unit_arch of Control_Unit is
         accumulator_write_enable_lw : std_logic;
 
     signal ALU_operation_add, ALU_operation_sub, ALU_operation_comp: unsigned (2 downto 0);
+    
+    -- Sinal para detectar opcode inválido
+    signal invalid_opcode : std_logic;
 
     begin
 
@@ -91,13 +97,24 @@ architecture Control_Unit_arch of Control_Unit is
         jump_adress <= instruction (12 downto 6); -- 7 bits do endereço de salto
 
         -- Jump
-        jump_enable <= '1' when state_s = "01" and opcode = JUMP_OP else '0';        -- BRANCH
-        -- As instruções BLE e BHS usam as flags definidas pela operação anterior da ALU
+        jump_enable <= '1' when state_s = "01" and opcode = JUMP_OP else '0';   
+
+        -- BRANCH (As instruções BLE e BHS usam as flags definidas pela operação anterior da ALU)
         ble_enable <= '1' when state_s = "01" and opcode = BLE_OP else '0';
-        bhs_enable <= '1' when state_s = "01" and opcode = BHS_OP else '0';        -- BLE e BHS usam as flags definidas por operações anteriores (CMP, ADD, SUB)
-        -- não é necessário fazer comparação durante o branch
+        bhs_enable <= '1' when state_s = "01" and opcode = BHS_OP else '0';        
         
-        pc_write_enable <= '1' when state_s = "01" else '0'; -- Habilita a escrita no PC para a próxima instrução
+        -- Detecção de opcode inválido (lógica combinatória)
+        invalid_opcode <= '0' when (opcode = LD_OP or opcode = ADD_OP or opcode = SUB_OP or 
+                                   opcode = MOV_ACC_OP or opcode = COMP_OP or opcode = MOV_REG_OP or
+                                   opcode = BLE_OP or opcode = BHS_OP or opcode = SW_OP or
+                                   opcode = LW_OP or opcode = AND_OP or opcode = OR_OP or
+                                   opcode = JUMP_OP or opcode = "0000") else '1'; -- 0000 é por conta da instrução NOP
+        
+        -- Sinal de exceção: ativado quando opcode é inválido
+        exception <= invalid_opcode;
+        
+        -- PC só é atualizado se não houver exceção (Isso trava a execução do programa)
+        pc_write_enable <= '1' when (state_s = "01" and invalid_opcode = '0') else '0'; -- Habilita a escrita no PC para a próxima instrução
 
         -- [Execute] Executa as instruções
 
