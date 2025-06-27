@@ -51,7 +51,7 @@ Before running, make sure you have the following libraries installed:
 - `ghdl`
 - `gtkwave`
 
-- ## Running
+## Running
 
 Run the following command:
 
