@@ -13,7 +13,7 @@ entity reg16bits is
 end entity reg16bits;
 
 
-architecture a_reg16bits of reg16bits is
+architecture reg16bits_arch of reg16bits is
     signal registro: unsigned(15 downto 0);
     
 begin
@@ -31,4 +31,4 @@ begin
 
     data_out <= registro;
 
-end architecture a_reg16bits;
+end architecture;

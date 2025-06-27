@@ -1,7 +1,3 @@
--- Armazena o endereço da próxima instrução a ser executada (Registrador de 7 bits)
--- As instruções são armazenadas em uma ROM de 128 posições, onde cada posição contém uma instrução de 17 bits
-
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

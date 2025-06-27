@@ -2,17 +2,6 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- Operações da ALU
--- 10 -> soma [1+0 = 1; 0+1 = 1; 0+0 = 0; 1+1 = 10;]
--- 11 -> subtração [1-0 = 1; 0-1 = 1; 1-1 = 0; 0-0 = 0]
--- 01 -> comparação (subtração sem armazenar)
--- 110 -> AND 
--- 111 -> OR
--- Carry (C)
--- Overflow	(V)
--- Zero	(Z)
--- Sinal/Negativo (N)
-
 entity ALU is
     port (
         input_0, input_1 : in unsigned (15 downto 0);
