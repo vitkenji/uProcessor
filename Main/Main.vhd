@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity Main is
     port (
         clk, rst : in std_logic;
-        primo_out : out unsigned(15 downto 0);
+        prime_out : out unsigned(15 downto 0);
         exception : out std_logic
     );
 end entity;
@@ -163,7 +163,7 @@ architecture Main_arch of Main is
     signal pc_out, adder_out, branch_adder_out, mux_jump_out, mux_branch_out: unsigned (6 downto 0);
     signal rom_out, ir_out: unsigned (16 downto 0);    
     signal accumulator_out, alu_out, bank_register_out, mux_acc_out, mux_reg_data_write_out, ram_data_out : unsigned (15 downto 0);
-    signal primo_reg_out : unsigned(15 downto 0);
+    signal prime_reg_out : unsigned(15 downto 0);
 
     signal jump_enable, ble_enable, bhs_enable,pc_write_enable, ir_write_enable, accumulator_write_enable, reg_write_enable, reg_data_write_selector, ram_write_enable : std_logic;
     
@@ -174,7 +174,7 @@ architecture Main_arch of Main is
     signal carry, sinal, zero, overflow, zero_out, carry_out, sinal_out, overflow_out : std_logic;
 
     signal flag_write_enable : std_logic;
-    signal primo_reg_we : std_logic;
+    signal prime_reg_we : std_logic;
     signal exception_signal : std_logic;
     
     begin
@@ -317,17 +317,17 @@ architecture Main_arch of Main is
             ram_data_out => ram_data_out 
         );
 
-        primo_reg_we <= '1' when bank_register_out = 0 else '0';
+        prime_reg_we <= '1' when bank_register_out = 0 else '0';
         
-        uut_primoReg : reg16bits port map (
+        uut_primeReg : reg16bits port map (
             clk => clk,
             rst => rst,
-            write_enable => primo_reg_we,
+            write_enable => prime_reg_we,
             data_in => ram_data_out,
-            data_out => primo_reg_out
+            data_out => prime_reg_out
         );
         
-        primo_out <= primo_reg_out;
+        prime_out <= prime_reg_out;
         
         input_constant_LD <= (15 downto 10 => ir_out(9)) & ir_out(9 downto 0);
         

@@ -9,7 +9,7 @@ architecture Main_tb_arch of Main_tb is
     component Main
     port (
         clk, rst: in std_logic;
-        primo_out: out unsigned(15 downto 0);
+        prime_out: out unsigned(15 downto 0);
         exception: out std_logic
     );
     end component;
@@ -17,14 +17,14 @@ architecture Main_tb_arch of Main_tb is
     constant period_time : time := 10 ns;
     signal finished : std_logic := '0';
     signal clk , reset : std_logic;
-    signal primo_out : unsigned(15 downto 0); -- Sinal para monitorar os primos
-    signal exception_signal : std_logic; -- Sinal para monitorar exceções
+    signal prime_out : unsigned(15 downto 0); 
+    signal exception_signal : std_logic; 
     
 begin
     uut : Main port map(
         clk => clk,
         rst => reset,
-        primo_out => primo_out,
+        prime_out => prime_out,
         exception => exception_signal
     );
 
