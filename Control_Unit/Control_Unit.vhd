@@ -9,7 +9,6 @@ entity Control_Unit is
         clk : in std_logic;
         rst : in std_logic;
 
-        -- Sinais de controle
         jump_enable, ble_enable, bhs_enable,
         pc_write_enable, ir_write_enable, accumulator_write_enable, flag_write_enable,
         reg_write_enable, ram_write_enable: out std_logic;
@@ -18,17 +17,14 @@ entity Control_Unit is
 
         accumulator_selector : out unsigned (1 downto 0);
 
-        -- Dados de controle
         ALU_operation : out unsigned (2 downto 0);
-        
-        -- Sinal de exceção
+
         exception : out std_logic
     );
 end entity;
 
 architecture Control_Unit_arch of Control_Unit is
 
-    -- Incluindo a máquina de estados [State 0 = Fetch (Leitura da Instrução na ROM), 1 = Decode (Decodificação da Instrução), 2 = Execute (Execução da Instrução)]
     component State_Machine
     port(
         clk : in std_logic;
@@ -37,7 +33,6 @@ architecture Control_Unit_arch of Control_Unit is
     );
     end component;
 
-    -- Operações da ALU
     constant ALU_ADD: unsigned (2 downto 0) := "010"; -- Operação de Adição
     constant ALU_SUB: unsigned (2 downto 0) := "011"; -- Operação de Subtração
     constant ALU_CMPR: unsigned (2 downto 0) := "001"; -- Operação de Comparação (Subtração para verificação de flags)
@@ -61,7 +56,6 @@ architecture Control_Unit_arch of Control_Unit is
     constant SW_OP : unsigned (3 downto 0) := "1001"; -- Opcode para SW
     constant LW_OP : unsigned (3 downto 0) := "1010"; -- Opcode para LW
 
-    -- Decodificação de Instruções
     signal opcode : unsigned (3 downto 0);
     signal reg: unsigned (2 downto 0); -- Registrador
     signal ld_constant: unsigned (9 downto 0); -- Constante Imediata
@@ -69,14 +63,12 @@ architecture Control_Unit_arch of Control_Unit is
 
     signal state_s : unsigned (1 downto 0);
 
-    -- VARIÁVEIS AUXILIARES para evitar múltiplas atribuições
     signal reg_write_enable_ld, reg_write_enable_mov, accumulator_write_enable_mov, 
         accumulator_write_enable_add, accumulator_write_enable_sub, 
         accumulator_write_enable_lw : std_logic;
 
     signal ALU_operation_add, ALU_operation_sub, ALU_operation_comp: unsigned (2 downto 0);
     
-    -- Sinal para detectar opcode inválido
     signal invalid_opcode : std_logic;
 
     begin
@@ -87,69 +79,50 @@ architecture Control_Unit_arch of Control_Unit is
             state => state_s
         );  
 
-        -- [Fetch] Ler a ROM e armazenar a instrução
         ir_write_enable <= '1' when state_s = "00" else '0'; -- Armazeno a instrução em um registrador para utilizar no Execute
 
-        -- [Decode] Identifica a instrução e produz os sinais de controle
         opcode <= instruction (16 downto 13); -- 4 bits Mais Significativos da Instrução
         reg <= instruction (12 downto 10); 
         ld_constant <= instruction (9 downto 0);
         jump_adress <= instruction (12 downto 6); -- 7 bits do endereço de salto
 
-        -- Jump
         jump_enable <= '1' when state_s = "01" and opcode = JUMP_OP else '0';   
 
-        -- BRANCH (As instruções BLE e BHS usam as flags definidas pela operação anterior da ALU)
         ble_enable <= '1' when state_s = "01" and opcode = BLE_OP else '0';
         bhs_enable <= '1' when state_s = "01" and opcode = BHS_OP else '0';        
         
-        -- Detecção de opcode inválido (lógica combinatória)
         invalid_opcode <= '0' when (opcode = LD_OP or opcode = ADD_OP or opcode = SUB_OP or 
                                    opcode = MOV_ACC_OP or opcode = COMP_OP or opcode = MOV_REG_OP or
                                    opcode = BLE_OP or opcode = BHS_OP or opcode = SW_OP or
                                    opcode = LW_OP or opcode = AND_OP or opcode = OR_OP or
                                    opcode = JUMP_OP or opcode = "0000") else '1'; -- 0000 é por conta da instrução NOP
         
-        -- Sinal de exceção: ativado quando opcode é inválido
         exception <= invalid_opcode;
         
-        -- PC só é atualizado se não houver exceção (Isso trava a execução do programa)
         pc_write_enable <= '1' when (state_s = "01" and invalid_opcode = '0') else '0'; -- Habilita a escrita no PC para a próxima instrução
 
-        -- [Execute] Executa as instruções
-
-        -- Load [Carregar um valor imediato no registrador indicado]
         reg_write_enable_ld <= '1' when state_s = "10" and opcode = LD_OP else '0';
      
-        -- Mov Acumulator
         accumulator_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_ACC_OP else '0';
         accumulator_selector <= "01" when state_s = "10" and opcode = MOV_ACC_OP else -- Habilita o MOV no acumulador [O valor do acumulador será o da saída do banco de registradores]
                                   "10" when state_s = "10" and opcode = LW_OP else "00";
-        -- Mov Register
+
         reg_write_enable_mov <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0';
    
-        -- ADD
         ALU_operation_add <= ALU_ADD when state_s = "10" and opcode = ADD_OP else (others => '0'); -- Define a operação de ADD na ALU
         accumulator_write_enable_add <= '1' when state_s = "10" and opcode = ADD_OP else '0'; -- Habilita a escrita no acumulador após a operação de ADD
 
-        -- SUB
         ALU_operation_sub <= ALU_SUB when state_s = "10" and opcode = SUB_OP else (others => '0'); -- Define a operação de SUB na ALU
         accumulator_write_enable_sub <= '1' when state_s = "10" and opcode = SUB_OP else '0'; -- Habilita a escrita no acumulador após a operação de SUB
 
-        --LW
         accumulator_write_enable_lw <= '1' when state_s = "10" and opcode = LW_OP else '0';
-        
-        
-        -- O objetivo da CMPR é comparar dois valores, alterando apenas as flags, sem modificar o valor de nenhum registrador.
-        -- A ULA realiza uma subtração entre os operandos, mas não armazena o resultado em lugar nenhum.
-        -- O resultado serve apenas para atualizar as flags (Zero, Sinal, Carry, Overflow)
+
         ALU_operation_comp <= ALU_CMPR when state_s = "10" and opcode = COMP_OP else (others => '0'); -- Define a operação de comparação na ALU
 
         reg_data_write_selector <= '1' when state_s = "10" and opcode = MOV_REG_OP else '0'; 
 
         ram_write_enable <= '1' when state_s = "10" and opcode = SW_OP else '0';
 
-        -- COMBINAÇÃO DOS SINAIS AUXILIARES
         reg_write_enable <= reg_write_enable_ld or reg_write_enable_mov;
         accumulator_write_enable <= accumulator_write_enable_mov or accumulator_write_enable_add or accumulator_write_enable_sub or accumulator_write_enable_lw;
         

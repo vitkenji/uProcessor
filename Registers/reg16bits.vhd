@@ -22,8 +22,8 @@ begin
     begin
         if rst = '1' then
             registro <= "0000000000000000";
-        elsif write_enable = '1' then -- Clock enable
-            if rising_edge(clk) then  -- Borda de subida do clock
+        elsif write_enable = '1' then
+            if rising_edge(clk) then 
                 registro <= data_in;
             end if;
         end if;

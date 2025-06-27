@@ -1,5 +1,3 @@
--- Armazena 128 (2^7) instruções (17 bits)
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -13,7 +11,6 @@ port(
 end entity;
 
 architecture ROM_arch of ROM is
-    -- Definição de opcodes
     constant JUMP: unsigned (3 downto 0) := "1111"; -- Opcode para JUMP
     constant LD: unsigned (3 downto 0) := "0001"; -- Opcode para LOAD
     constant MOV_ACC: unsigned (3 downto 0) := "0100"; -- Opcode para MOV Accumulator
@@ -26,7 +23,6 @@ architecture ROM_arch of ROM is
     constant SW: unsigned (3 downto 0) := "1001"; -- Opcode para SW
     constant LW: unsigned (3 downto 0) := "1010"; -- Opcode para LW
 
-    -- Definição de registradores
     constant R0: unsigned (2 downto 0) := "000"; -- Registrador R0
     constant R1: unsigned (2 downto 0) := "001"; -- Registrador R1
     constant R2: unsigned (2 downto 0) := "010"; -- Registrador R2
@@ -34,7 +30,7 @@ architecture ROM_arch of ROM is
     constant R4: unsigned (2 downto 0) := "100"; -- Registrador R4
     constant R5: unsigned (2 downto 0) := "101"; -- Registrador R5
 
-    constant NOP: unsigned (16 downto 0) := (others => '0'); -- Instrução NOP (No Operation)
+    constant NOP: unsigned (16 downto 0) := (others => '0');
     
     type mem is array (0 to 127) of unsigned(16 downto 0);
 

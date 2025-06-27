@@ -13,7 +13,6 @@ entity RAM is
 end entity;
 
 architecture RAM_arch of RAM is
-    -- Memória de 16 bits de dados, com 65536 posições (2^16)
     type mem is array (0 to 65535) of unsigned (15 downto 0);
     signal content_ram : mem := (others => (others => '0'));
     begin

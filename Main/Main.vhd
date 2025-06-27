@@ -5,9 +5,7 @@ use ieee.numeric_std.all;
 entity Main is
     port (
         clk, rst : in std_logic;
-        -- Novo pino para exibir o número primo atual
         primo_out : out unsigned(15 downto 0);
-        -- Sinal de exceção para opcode inválido
         exception : out std_logic
     );
 end entity;
@@ -77,7 +75,6 @@ architecture Main_arch of Main is
             clk : in std_logic;
             rst : in std_logic;
             
-            -- Sinais de controle
             jump_enable, ble_enable, bhs_enable,
             pc_write_enable, ir_write_enable, accumulator_write_enable, 
             reg_write_enable, ram_write_enable : out std_logic;
@@ -85,10 +82,8 @@ architecture Main_arch of Main is
             reg_data_write_selector : out std_logic;
 
             accumulator_selector : out unsigned (1 downto 0);
-            -- Dados de controle
             ALU_operation : out unsigned (2 downto 0);
             flag_write_enable : out std_logic;
-            -- Sinal de exceção
             exception : out std_logic
         );
     end component;
@@ -165,30 +160,24 @@ architecture Main_arch of Main is
         );
     end component;
     
-    -- Sinais de interconexão
     signal pc_out, adder_out, branch_adder_out, mux_jump_out, mux_branch_out: unsigned (6 downto 0);
     signal rom_out, ir_out: unsigned (16 downto 0);    
     signal accumulator_out, alu_out, bank_register_out, mux_acc_out, mux_reg_data_write_out, ram_data_out : unsigned (15 downto 0);
     signal primo_reg_out : unsigned(15 downto 0);
 
-    -- Sinais de controle da Control_Unit
     signal jump_enable, ble_enable, bhs_enable,pc_write_enable, ir_write_enable, accumulator_write_enable, reg_write_enable, reg_data_write_selector, ram_write_enable : std_logic;
     
     signal accumulator_selector : unsigned (1 downto 0);
     signal ALU_operation : unsigned (2 downto 0);    
     signal branch_enable : std_logic;
-    signal input_constant_LD : unsigned (15 downto 0);-- Flags da ALU
+    signal input_constant_LD : unsigned (15 downto 0);
     signal carry, sinal, zero, overflow, zero_out, carry_out, sinal_out, overflow_out : std_logic;
 
-    -- Sinal para controle de escrita das flags
     signal flag_write_enable : std_logic;
     signal primo_reg_we : std_logic;
     signal exception_signal : std_logic;
     
     begin
-        ------------------------------------------
-        -- INSTRUÇÃO --
-        ------------------------------------------
         
         uut_PC : PC port map (
             clk => clk,
@@ -197,14 +186,12 @@ architecture Main_arch of Main is
             pc_in => mux_jump_out,
             pc_out => pc_out
         );
-        
-        -- Incrementador do PC
+
         uut_Adder : Adder port map (
             data_in => pc_out,
             data_out => adder_out
         );
-        
-        -- Somador para cálculo de branch relativo        
+            
         uut_Branch_Adder : Branch_Adder port map (
             delta => ir_out(12 downto 7),
             current_address => pc_out,
@@ -225,17 +212,9 @@ architecture Main_arch of Main is
             instruction_out => ir_out
         );
 
-        ------------------------------------------
-        -- LÓGICA DE SALTO --
-        ------------------------------------------
-        
-        -- Branch é ativado com base nas flags da operação anterior da ALU (CMP, ADD, SUB)
-        -- BLE (Branch if Less or Equal): Salta se Z=1 OU N≠V (Zero -> Os valores comparados são iguais | Se o sinal for negativo (N=1) e não houve overflow (V=0), ou se o sinal for positivo (N=0) e houve overflow (V=1): O primeiro operando é menor.)
-        -- BHS (Branch if Higher or Same): Salta se C=1 (C = 1 -> A < B, e sempre CMP vai ser acc - reg, então c=1 signifiica que acc < reg = reg > acc )
         branch_enable <= '1' when ble_enable = '1' and (zero_out = '1' or sinal_out /= overflow_out) else 
                          '1' when bhs_enable = '1' and carry_out = '1' else '0';
 
-        -- Seleção entre próxima instrução ou salto
         uut_MUX_branch : MUX_2x1_7bits port map (
             selector => branch_enable,
             input_0 => adder_out,
@@ -243,22 +222,17 @@ architecture Main_arch of Main is
             output => mux_branch_out
         );
         
-        -- Seleção entre branch e jump
         uut_MUX_jump : MUX_2x1_7bits port map (
             selector => jump_enable,
             input_0 => mux_branch_out,
             input_1 => ir_out(12 downto 6),
             output => mux_jump_out
         );
-        
-        ------------------------------------------
-        -- UNIDADE DE CONTROLE --
-        ------------------------------------------
-        
+               
         uut_Control_Unit : Control_Unit port map (
             clk => clk,
             rst => rst,
-            instruction => ir_out,  -- Usando instrução do IR, não diretamente da ROM
+            instruction => ir_out,  
             jump_enable => jump_enable,
             ble_enable => ble_enable,
             bhs_enable => bhs_enable,
@@ -273,11 +247,7 @@ architecture Main_arch of Main is
             flag_write_enable => flag_write_enable,
             exception => exception_signal
         );
-        
-        ------------------------------------------
-        -- DADOS --
-        ------------------------------------------
-        
+               
         uut_bancoReg : bancoReg port map (
             clk => clk,
             rst => rst,
@@ -292,7 +262,7 @@ architecture Main_arch of Main is
             clk => clk,
             rst => rst,
             write_enable => accumulator_write_enable,
-            data_in => mux_acc_out,  -- Para ADD/SUB vem da ALU e para MOV vem do banco de registradores
+            data_in => mux_acc_out, 
             data_out => accumulator_out
         );  
         
@@ -307,7 +277,6 @@ architecture Main_arch of Main is
             alu_result => alu_out
         );
 
-        -- Registradores de flags
         uut_flagReg_zero : flagReg port map (
             clk => clk,
             rst => rst,
@@ -347,8 +316,7 @@ architecture Main_arch of Main is
             ram_data_in => accumulator_out,
             ram_data_out => ram_data_out 
         );
-        
-        -- Write enable para o registrador de primos: só ativa quando RAM[0] está sendo lido
+
         primo_reg_we <= '1' when bank_register_out = 0 else '0';
         
         uut_primoReg : reg16bits port map (
@@ -361,31 +329,23 @@ architecture Main_arch of Main is
         
         primo_out <= primo_reg_out;
         
-        ------------------------------------------
-        -- MULTIPLEXADORES DE DADOS --
-        ------------------------------------------
-        
-        -- Preparação de dados para operações de load imediato
         input_constant_LD <= (15 downto 10 => ir_out(9)) & ir_out(9 downto 0);
         
-        -- Seleção de entrada para o acumulador (ALU, banco de registradores ou RAM)
         uut_MUX_acc : MUX_3x1_16bits port map (
             selector => accumulator_selector,
-            input_0 => alu_out,  -- Para ADD/SUB vem da ALU
-            input_1 => bank_register_out,  -- Para MOV vem do banco de registradores
-            input_2 => ram_data_out, -- Para LW vem da RAM
+            input_0 => alu_out,  
+            input_1 => bank_register_out,  
+            input_2 => ram_data_out, 
             output => mux_acc_out
         );        
         
-        -- Seleção de dados para escrita no banco de registradores
         uut_MUX_reg_data_write : MUX_2x1_16bits port map (
             selector => reg_data_write_selector,
-            input_0 => input_constant_LD, -- Para LD (constante imediata)
-            input_1 => accumulator_out,   -- Para MOV Rn (valor do acumulador)
+            input_0 => input_constant_LD,
+            input_1 => accumulator_out,
             output => mux_reg_data_write_out
         );
         
-        -- Conecta o sinal de exceção à saída
         exception <= exception_signal;
 
 end architecture;
