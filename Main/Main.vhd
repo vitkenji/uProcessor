@@ -88,7 +88,7 @@ architecture Main_arch of Main is
         );
     end component;
 
-    component bancoReg
+    component Register_Bank
         port(
             clk: in std_logic;
             rst: in std_logic;
@@ -248,7 +248,7 @@ architecture Main_arch of Main is
             exception => exception_signal
         );
                
-        uut_bancoReg : bancoReg port map (
+        uut_Register_Bank : Register_Bank port map (
             clk => clk,
             rst => rst,
             reg_read => ir_out(12 downto 10),
