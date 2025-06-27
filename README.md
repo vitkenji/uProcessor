@@ -43,6 +43,20 @@ J:
 | opcode (4)  | address(7) | nothing(6)
 | --      | --    | --
 
+
+## Requirements
+
+Before running, make sure you have the following libraries installed:
+
+- `ghdl`
+- `gtkwave`
+
+- ## Running
+
+Run the following command:
+
+- `make view`
+
 ## Collaborators:
 - Adryan Castro Feres
 - Vitor Kenji Zoppo Yamada
