@@ -1,25 +1,34 @@
 # Microprocessor
 
+A microprocessor implemented in VHDL, based on a RISC-V processor. Validation was performed using the Sieve of Eratosthenes algorithm.
+
+* 17-bit instructions.
+* 128-address instruction memory.
+* Bank register with 6 registers.
+* 128Kb of RAM.
+
 ## Instructions
 
-| Mnemonic   | Opcode | Format | Description
-| --         |--      |--      | --
-| LD Rn,i    | 0001   |  I     | Rn = i
-| ADD Rn     | 0010   |  R     | A += Rn
-| SUB Rn     | 0011   |  R     | A -= Rn
-| MOV A,Rn   | 0100   |  R     | A = Rn
-| CMPR       | 0101   |  R     | 
-| MOV Rn,A   | 0110   |  R     | Rn = A
-| BLE b      | 0111   |  B     | A <= reg ? PC+b (branch if less or equal, usa flags da ALU) 
-| BHS b      | 1000   |  B     | A >= reg ? PC+b (branch if higher or same, usa flags da ALU)
-| SW         | 1001   |  M     | RAM[Rn]= A
-| LW         | 1010   |  M     | A =  RAM[Rn]
-| JUMP i     | 1111   |  J     | address = i
+| Instr      | Description         | Opcode | Format |
+|------------|---------------------|--------|--------|
+| LD Rn,i    | Rn = i              | 0001   | I      |
+| ADD Rn     | A += Rn             | 0010   | R      |
+| SUB Rn     | A -= Rn             | 0011   | R      |
+| MOV A,Rn   | A = Rn              | 0100   | R      |
+| CMPR       | A - Rn              | 0101   | R      |
+| MOV Rn,A   | Rn = A              | 0110   | R      |
+| SW Rn      | RAM[Rn] = A         | 1001   | R      |
+| LW Rn      | A = RAM[Rn]         | 1010   | R      |
+| AND Rn     | A && Rn             | 1001   | R      |
+| OR Rn      | A or Rn             | 1010   | R      |
+| BLE b      | A <= reg ? PC + b   | 0111   | B      |
+| BHS b      | A >= reg ? PC + b   | 1000   | B      |
+| JUMP i     | address = i         | 1111   | J      |
 
 ## Instruction formats
 
 B:
-| opcode (4) | rn (3) | consts(10) 
+| opcode (4) | delta (6) | nothing(7) 
 | --      | --    | --  
 
 R:
